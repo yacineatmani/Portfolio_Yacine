@@ -1,110 +1,149 @@
+// import React from 'react';
+// import { Head, useForm } from '@inertiajs/react';
+// import InputError from '../../components/input-error';
+// import TextInput from '../../components/TextInput';
+// import PrimaryButton from '../../components/PrimaryButton';
+
+// export default function Login() {
+//     const { data, setData, post, processing, errors } = useForm({
+//         email: '',
+//         password: '',
+//         remember: false,
+//     });
+
+//     const handleSubmit = (e: React.FormEvent) => {
+//         e.preventDefault();
+//         post(route('login'));
+//     };
+
+//     return (
+//         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900">
+//             <Head title="Connexion" />
+//             <form onSubmit={handleSubmit} className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+//                 <h1 className="text-2xl font-bold mb-6 text-center">Connexion</h1>
+//                 <div className="mb-4">
+//                     <TextInput
+//                         id="email"
+//                         type="email"
+//                         name="email"
+//                         value={data.email}
+//                         onChange={e => setData('email', e.target.value)}
+//                         placeholder="Adresse e-mail"
+//                         required
+//                         autoFocus
+//                         className="w-full"
+//                     />
+//                     <InputError message={errors.email} />
+//                 </div>
+//                 <div className="mb-4">
+//                     <TextInput
+//                         id="password"
+//                         type="password"
+//                         name="password"
+//                         value={data.password}
+//                         onChange={e => setData('password', e.target.value)}
+//                         placeholder="Mot de passe"
+//                         required
+//                         className="w-full"
+//                     />
+//                     <InputError message={errors.password} />
+//                 </div>
+//                 <div className="mb-6 flex items-center">
+//                     <input
+//                         id="remember"
+//                         type="checkbox"
+//                         checked={data.remember}
+//                         onChange={e => setData('remember', e.target.checked)}
+//                         className="mr-2"
+//                     />
+//                     <label htmlFor="remember" className="text-gray-700">Se souvenir de moi</label>
+//                 </div>
+//                 <PrimaryButton type="submit" className="w-full" disabled={processing}>
+//                     {processing ? 'Connexion...' : 'Se connecter'}
+//                 </PrimaryButton>
+//             </form>
+//         </div>
+//     );
+// }
+
+
+import React, { FormEvent, ChangeEvent } from 'react';
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import InputError from '../../components/input-error';
+import TextInput from '../../components/TextInput';
+import PrimaryButton from '../../components/PrimaryButton';
 
-import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
-
-type LoginForm = {
-    email: string;
-    password: string;
-    remember: boolean;
-};
-
-interface LoginProps {
-    status?: string;
-    canResetPassword: boolean;
-}
-
-export default function Login({ status, canResetPassword }: LoginProps) {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
+export default function Login() {
+    const { data, setData, post, processing, errors } = useForm({
         email: '',
         password: '',
         remember: false,
     });
 
-    const submit: FormEventHandler = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, type, checked, value } = e.target;
+        setData(name, type === 'checkbox' ? checked : value);
+    };
+
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
+        post(route('login'));
     };
 
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
-            <Head title="Log in" />
+        <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900">
+            <Head title="Connexion" />
 
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
-                    </div>
+            <form onSubmit={handleSubmit} className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+                <h1 className="text-2xl font-bold mb-6 text-center">Connexion</h1>
 
-                    <div className="grid gap-2">
-                        <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
-                            {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
-                                    Forgot password?
-                                </TextLink>
-                            )}
-                        </div>
-                        <Input
-                            id="password"
-                            type="password"
-                            required
-                            tabIndex={2}
-                            autoComplete="current-password"
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Password"
-                        />
-                        <InputError message={errors.password} />
-                    </div>
-
-                    <div className="flex items-center space-x-3">
-                        <Checkbox
-                            id="remember"
-                            name="remember"
-                            checked={data.remember}
-                            onClick={() => setData('remember', !data.remember)}
-                            tabIndex={3}
-                        />
-                        <Label htmlFor="remember">Remember me</Label>
-                    </div>
-
-                    <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Log in
-                    </Button>
+                <div className="mb-4">
+                    <TextInput
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        onChange={handleChange}
+                        placeholder="Adresse e-mail"
+                        autoFocus
+                        required
+                        className="w-full"
+                    />
+                    <InputError message={errors.email} />
                 </div>
 
-                <div className="text-muted-foreground text-center text-sm">
-                    Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
-                        Sign up
-                    </TextLink>
+                <div className="mb-4">
+                    <TextInput
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password}
+                        onChange={handleChange}
+                        placeholder="Mot de passe"
+                        required
+                        className="w-full"
+                    />
+                    <InputError message={errors.password} />
                 </div>
+
+                <div className="mb-6 flex items-center">
+                    <input
+                        id="remember"
+                        name="remember"
+                        type="checkbox"
+                        checked={data.remember}
+                        onChange={handleChange}
+                        className="mr-2"
+                    />
+                    <label htmlFor="remember" className="text-gray-700">
+                        Se souvenir de moi
+                    </label>
+                </div>
+
+                <PrimaryButton type="submit" className="w-full" disabled={processing}>
+                    {processing ? 'Connexion...' : 'Se connecter'}
+                </PrimaryButton>
             </form>
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-        </AuthLayout>
+        </div>
     );
 }

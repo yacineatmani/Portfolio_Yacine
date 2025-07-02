@@ -1,0 +1,314 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+  background-color: #f3f4f6;
+}
+
+.dark body {
+  color: #f3f4f6;
+  background-color: #111827;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.dark .card {
+  background: #1f2937;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.bg-gray-100 {
+  background: rgba(243, 244, 246, 0.95);
+}
+
+.dark .bg-gray-900 {
+  background: rgba(17, 24, 39, 0.95);
+}
+
+input,
+textarea,
+select {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0;
+  color: #111827;
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+  background: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+input[type='file'] {
+  padding: 0.25rem;
+}
+
+button {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 1rem;
+  }
+}
+
+/* Dashboard modernisé : styles sobres, glassmorphism, harmonisation PrimeReact/Tailwind */
+/* .glass-card {
+  background: rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(30,64,175,0.10);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(30,64,175,0.10);
+  backdrop-filter: blur(18px);
+  padding: 2rem 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.action-btn {
+  background: #2563eb;
+  border: none;
+  border-radius: 1rem;
+  color: #fff;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 4px 16px rgba(30,64,175,0.08);
+  transition: all 0.2s;
+}
+.action-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px) scale(1.04);
+}
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 2rem 1.5rem 2rem;
+  background: rgba(255,255,255,0.10);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(30,64,175,0.10);
+  margin-bottom: 2rem;
+  border: 1.5px solid rgba(30,64,175,0.10);
+}
+.profile-photo {
+  width: 96px;
+  height: 96px;
+  min-width: 96px;
+  min-height: 96px;
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #2563eb;
+  box-shadow: 0 2px 12px rgba(30,64,175,0.12);
+  background: #fff;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.profile-info .name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1e293b;
+}
+.profile-info .status {
+  font-size: 1rem;
+  color: #64748b;
+}
+.profile-info .bio {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 1024px) {
+  .dashboard-main-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  background: rgba(99, 102, 241, 0.3);
+  pointer-events: none;
+  z-index: 10;
+}
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+} */ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+  background-color: #f9fafb;
+}
+
+.dark body {
+  color: #f3f4f6;
+  background-color: #111827;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(209, 213, 219, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+}
+
+.dark .glass-card {
+  background: rgba(31, 41, 55, 0.9);
+  border-color: rgba(75, 85, 99, 0.3);
+}
+
+.action-btn {
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 1rem;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.dark .profile-header {
+  background: rgba(31, 41, 55, 0.8);
+  border-color: rgba(75, 85, 99, 0.3);
+}
+
+.profile-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #4f46e5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info .name {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.profile-info .status {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+input,
+textarea,
+select {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: #1e293b;
+  transition: border-color 0.2s ease;
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+  background: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+input[type='file'] {
+  padding: 0.25rem;
+}
+
+button {
+  transition: all 0.2s ease;
+}
+
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-main-grid {
+    grid-template-columns: 3fr 1fr;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  background: rgba(99, 102, 241, 0.3);
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}

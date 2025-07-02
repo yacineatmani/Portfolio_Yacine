@@ -13,8 +13,30 @@ class User extends Authenticatable
         'password',
         'bio',
         'photo',
-        'cv', // Ajoute ce champ si tu veux stocker le chemin du CV
+        'cv', // Retour au nom original cv
     ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    // Accessor pour obtenir l'URL complète de la photo
+    public function getPhotoUrlAttribute()
+    {
+        if ($this->photo) {
+            return asset('storage/' . $this->photo);
+        }
+        return null;
+    }
 
     public function projects()
     {

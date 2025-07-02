@@ -148,46 +148,24 @@ const Home: React.FC = () => {
   const projects: Project[] = pageProps.projects || [
     {
       id: 1,
-      title: 'Projet 1',
-      description: 'Un projet de site e-commerce moderne.',
-      github_link: 'https://github.com/yacineatmani/projet1',
-      demo_link: 'https://projet1.demo',
+      title: 'Projet Portfolio',
+      description: 'Application portfolio moderne avec Laravel et React.',
+      github_link: 'https://github.com/yacineatmani/portfolio',
+      demo_link: 'https://portfolio.demo',
       image: '/images/projet1.jpg',
-      stack: ['React', 'Laravel', 'Docker'],
-      challenges: 'Optimisation des performances.',
+      stack: ['React', 'Laravel', 'Tailwind CSS'],
+      challenges: 'Intégration frontend/backend moderne.',
       video: null,
     },
     {
       id: 2,
-      title: 'Projet 2',
-      description: 'Une application de gestion de tâches.',
-      github_link: 'https://github.com/yacineatmani/projet2',
-      demo_link: 'https://projet2.demo',
+      title: 'Gestion de Tâches',
+      description: 'Application de gestion de tâches avec temps réel.',
+      github_link: 'https://github.com/yacineatmani/tasks',
+      demo_link: 'https://tasks.demo',
       image: 'https://images.unsplash.com/photo-1721332153282-3be1f363074d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      stack: ['React', 'Node.js'],
-      challenges: 'Synchronisation en temps réel.',
-      video: null,
-    },
-    {
-      id: 3,
-      title: 'Projet 3',
-      description: 'Une plateforme de suivi de fitness.',
-      github_link: 'https://github.com/yacineatmani/projet3',
-      demo_link: 'https://projet3.demo',
-      image: '/images/projet3.jpg',
-      stack: ['React', 'Express', 'MongoDB'],
-      challenges: 'Gestion des données en temps réel.',
-      video: null,
-    },
-    {
-      id: 4,
-      title: 'Projet 4',
-      description: 'Un tableau de bord analytique.',
-      github_link: 'https://github.com/yacineatmani/projet4',
-      demo_link: 'https://projet4.demo',
-      image: '/images/projet4.jpg',
-      stack: ['Vue.js', 'Laravel', 'MySQL'],
-      challenges: 'Visualisation des données.',
+      stack: ['React', 'Node.js', 'Socket.IO'],
+      challenges: 'Synchronisation temps réel entre utilisateurs.',
       video: null,
     },
   ];
@@ -388,8 +366,20 @@ const Home: React.FC = () => {
   const handleImageError = (projectId: number) => setImageErrors((prev) => [...prev, projectId]);
 
   const getImagePath = (image: string | null | undefined) => {
-    if (!image) return '/images/placeholder.png';
-    return image.startsWith('http') || image.startsWith('https') ? image : `/storage/${image}`;
+    if (!image) return '/images/placeholder.svg';
+    
+    // Si c'est déjà une URL complète, on la retourne
+    if (image.startsWith('http') || image.startsWith('https')) {
+      return image;
+    }
+    
+    // Si ça commence par "/", on assume que c'est déjà un chemin correct
+    if (image.startsWith('/')) {
+      return image;
+    }
+    
+    // Sinon, on construit le chemin vers storage
+    return `/storage/${image}`;
   };
 
   return (
@@ -450,7 +440,7 @@ const Home: React.FC = () => {
   <div style={{ textAlign: 'center', maxWidth: '48rem', margin: '0 auto', padding: '0 1.5rem' }}>
 <img
   src={user.photo ? getImagePath(user.photo) : '/images/placeholder.png'}
-  alt="Yacine Atmani"
+  alt={user.name || "Profile"}
   className="hero-image"
   style={{
     width: '10rem',
@@ -461,10 +451,16 @@ const Home: React.FC = () => {
     objectFit: 'cover',
   }}
   onError={(e) => {
-    console.error("Erreur de chargement de l'image avatar:", e.currentTarget.src, 'Fallback à placeholder');
-    e.currentTarget.src = '/images/placeholder.png';
+    console.error("Erreur de chargement de l'image avatar:", e.currentTarget.src);
+    // Essayer le placeholder local d'abord
+    if (e.currentTarget.src !== '/images/placeholder.png') {
+      e.currentTarget.src = '/images/placeholder.png';
+    } else {
+      // Si même le placeholder échoue, utiliser une image par défaut
+      e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgdmlld0JveD0iMCAwIDE2MCAxNjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iODAiIGN5PSI4MCIgcj0iODAiIGZpbGw9IiNFNUU3RUIiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjY4IiByPSIyNCIgZmlsbD0iIzlDQTNBRiIvPjxwYXRoIGQ9Ik04MCAyMEM0NC43IDE2NiA4MCA2NCA4MCA2NFM2MCA4MCA0NC43IDEwNiIgZmlsbD0iIzlDQTNBRiIvPjwvc3ZnPgo=';
+    }
   }}
-  onLoad={(e) => console.log('Image avatar chargée:', e.currentTarget.src)}
+  onLoad={(e) => console.log('Image avatar chargée avec succès:', e.currentTarget.src)}
 />    
     <div className="hero-content" style={{ marginTop: '1.5rem' }}>
       <h1 style={{ fontSize: '1.875rem', fontWeight: 'bold', color: isDarkMode ? '#a78bfa' : '#8b5cf6' }}>{user.name}</h1>
@@ -472,7 +468,7 @@ const Home: React.FC = () => {
         Solutions web innovantes avec passion et précision.
       </p>
       <a
-        href={getImagePath(user.cv)}
+        href="/cv.pdf"
         style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -487,11 +483,15 @@ const Home: React.FC = () => {
         }}
         target="_blank"
         rel="noopener noreferrer"
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#7c3aed')}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#8b5cf6')}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#7c3aed';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = '#8b5cf6';
+        }}
       >
         <FaDownload size={16} />
-        Mon CV
+        Télécharger mon CV
       </a>
     </div>
   </div>
@@ -556,24 +556,98 @@ const Home: React.FC = () => {
                       </div>
                       <div>
                         <h3 style={{ fontSize: '1.25rem', fontWeight: '600', color: isDarkMode ? '#e0e7ff' : '#111827', marginBottom: '0.5rem' }}>{project.title}</h3>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem', justifyContent: 'center' }}>
-                          {project.stack?.map((tech, i) => (
-                            <span key={i} style={{ fontSize: '0.75rem', backgroundColor: isDarkMode ? '#4b5563' : '#e0e7ff', color: isDarkMode ? '#a78bfa' : '#8b5cf6', borderRadius: '9999px', padding: '0.25rem 0.75rem' }}>
-                              {tech}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem', justifyContent: 'center' }}>
+                          {(project.stack && project.stack.length > 0) ? project.stack.map((tech, i) => (
+                            <span key={i} style={{ 
+                              fontSize: '0.75rem', 
+                              backgroundColor: isDarkMode ? '#4b5563' : '#e0e7ff', 
+                              color: isDarkMode ? '#a78bfa' : '#8b5cf6', 
+                              borderRadius: '9999px', 
+                              padding: '0.25rem 0.75rem',
+                              fontWeight: '500',
+                              transition: 'all 0.2s ease',
+                              cursor: 'default'
+                            }}>
+                              {tech.trim()}
                             </span>
-                          ))}
+                          )) : (
+                            <span style={{ 
+                              fontSize: '0.75rem', 
+                              backgroundColor: isDarkMode ? '#374151' : '#f3f4f6', 
+                              color: isDarkMode ? '#9ca3af' : '#6b7280', 
+                              borderRadius: '9999px', 
+                              padding: '0.25rem 0.75rem'
+                            }}>
+                              Technologies non spécifiées
+                            </span>
+                          )}
                         </div>
-                        <p style={{ fontSize: '0.875rem', color: isDarkMode ? '#d1d5db' : '#4b5563', marginBottom: '0.5rem' }}>{project.description}</p>
-                        <p style={{ fontSize: '0.875rem', color: isDarkMode ? '#d1d5db' : '#4b5563', marginBottom: '0.5rem' }}><strong>Challenges :</strong> {project.challenges}</p>
-                        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+                        <p style={{ fontSize: '0.875rem', color: isDarkMode ? '#d1d5db' : '#4b5563', marginBottom: '0.75rem', lineHeight: '1.5' }}>{project.description}</p>
+                        {project.challenges && (
+                          <p style={{ fontSize: '0.875rem', color: isDarkMode ? '#a78bfa' : '#8b5cf6', marginBottom: '0.75rem', fontStyle: 'italic' }}>
+                            <strong>Défis :</strong> {project.challenges}
+                          </p>
+                        )}
+                        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1rem' }}>
                           {project.github_link && (
-                            <a href={project.github_link} style={{ color: '#8b5cf6', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: '500', textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
-                              <FaGithub size={16} /> GitHub
+                            <a 
+                              href={project.github_link} 
+                              style={{ 
+                                color: '#8b5cf6', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '0.5rem', 
+                                fontSize: '0.875rem', 
+                                fontWeight: '500', 
+                                textDecoration: 'none',
+                                padding: '0.5rem 1rem',
+                                borderRadius: '0.375rem',
+                                border: `1px solid ${isDarkMode ? '#8b5cf6' : '#8b5cf6'}`,
+                                transition: 'all 0.2s ease',
+                                backgroundColor: 'transparent'
+                              }} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = '#8b5cf6';
+                                e.currentTarget.style.color = '#ffffff';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = 'transparent';
+                                e.currentTarget.style.color = '#8b5cf6';
+                              }}
+                            >
+                              <FaGithub size={16} /> Code
                             </a>
                           )}
                           {project.demo_link && (
-                            <a href={project.demo_link} style={{ color: '#8b5cf6', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: '500', textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
-                              <FaExternalLinkAlt size={16} /> Démo
+                            <a 
+                              href={project.demo_link} 
+                              style={{ 
+                                color: '#ffffff', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '0.5rem', 
+                                fontSize: '0.875rem', 
+                                fontWeight: '500', 
+                                textDecoration: 'none',
+                                padding: '0.5rem 1rem',
+                                borderRadius: '0.375rem',
+                                backgroundColor: '#8b5cf6',
+                                transition: 'all 0.2s ease'
+                              }} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = '#7c3aed';
+                                e.currentTarget.style.transform = 'translateY(-1px)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = '#8b5cf6';
+                                e.currentTarget.style.transform = 'translateY(0)';
+                              }}
+                            >
+                              <FaExternalLinkAlt size={16} /> Voir le projet
                             </a>
                           )}
                         </div>

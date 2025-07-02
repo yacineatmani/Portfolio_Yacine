@@ -1,5 +1,6 @@
 import { usePage } from '@inertiajs/react';
 import { PropsWithChildren, useState } from 'react';
+import { Link } from '@inertiajs/react';
 
 interface User {
   id: number;
@@ -28,7 +29,7 @@ export default function AuthenticatedLayout({ children }: PropsWithChildren) {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-        <div className="container mx-auto px-4 py-2">
+        <div className="container mx-auto px-4 py-0">
           <div className="flex justify-between items-center">
             <div className="text-lg font-semibold dark:text-white">
               {auth.user?.name || 'Utilisateur'}
@@ -38,9 +39,9 @@ export default function AuthenticatedLayout({ children }: PropsWithChildren) {
                 Dashboard
               </a>
               {auth.user && (
-                <a href="/logout" className="text-blue-500 dark:text-blue-400">
+                <Link href={route('logout')} method="post" as="button" className="text-blue-500 dark:text-blue-400">
                   Déconnexion
-                </a>
+                </Link>
               )}
           <button
   onClick={toggleTheme}

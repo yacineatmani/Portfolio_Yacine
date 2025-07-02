@@ -88,7 +88,11 @@ export default function ParticlesBackground() {
         <Particles
             id="tsparticles"
             options={options}
-            className="absolute inset-0 z-0"
+            className="absolute inset-0"
+            style={{ 
+                zIndex: -1,
+                pointerEvents: 'none'
+            }}
         />
     );
 }

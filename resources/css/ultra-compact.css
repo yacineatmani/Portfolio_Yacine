@@ -1,0 +1,202 @@
+/* Ultra Compact Dashboard Styles - Force minimum sizes */
+
+/* Compact project images */
+.project-image-ultra {
+    width: 48px !important;
+    height: 24px !important;
+    min-width: 48px !important;
+    min-height: 24px !important;
+    max-width: 48px !important;
+    max-height: 24px !important;
+    object-fit: cover !important;
+    border-radius: 4px !important;
+}
+
+/* Project image container */
+.project-image-container-ultra {
+    width: 48px !important;
+    height: 24px !important;
+    min-width: 48px !important;
+    min-height: 24px !important;
+    max-width: 48px !important;
+    max-height: 24px !important;
+}
+
+/* Compact project cards */
+.project-card-ultra {
+    padding: 4px !important;
+    margin: 0 !important;
+    min-height: auto !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 120px !important;
+    min-width: 80px !important;
+}
+
+/* Compact project grid */
+.project-grid-ultra {
+    gap: 4px !important;
+    display: grid !important;
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 1536px) {
+    .project-grid-ultra {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 1280px) {
+    .project-grid-ultra {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .project-grid-ultra {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-grid-ultra {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Compact skill cards */
+.skill-card-ultra {
+    padding: 4px !important;
+    margin: 0 !important;
+    min-height: auto !important;
+    height: auto !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+}
+
+/* Compact skill grid */
+.skill-grid-ultra {
+    gap: 4px !important;
+    display: grid !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 1024px) {
+    .skill-grid-ultra {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .skill-grid-ultra {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .skill-grid-ultra {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Ultra compact text */
+.text-ultra-xs {
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+}
+
+/* Ultra compact buttons */
+.btn-ultra {
+    padding: 1px 2px !important;
+    font-size: 10px !important;
+    min-height: auto !important;
+    height: auto !important;
+}
+
+/* Ultra compact sections */
+.section-ultra {
+    padding: 2px !important;
+    margin: 0 !important;
+    gap: 2px !important;
+}
+
+/* Force remove all unnecessary spacing */
+.no-spacing {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Ultra compact progress bars */
+.progress-ultra {
+    height: 2px !important;
+    margin-top: 1px !important;
+}
+
+/* Ultra compact icons */
+.icon-ultra {
+    width: 8px !important;
+    height: 8px !important;
+    min-width: 8px !important;
+    min-height: 8px !important;
+}
+
+/* Project title ultra compact */
+.project-title-ultra {
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+    max-height: 20px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+/* Skill title ultra compact */
+.skill-title-ultra {
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1px !important;
+}
+
+/* Skill level ultra compact */
+.skill-level-ultra {
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1px !important;
+}
+
+/* Ultra compact dashboard sections */
+.dashboard-section-ultra {
+    padding: 3px !important;
+    margin-bottom: 3px !important;
+}
+
+/* Ultra compact header */
+.header-ultra {
+    padding: 2px 6px !important;
+    min-height: auto !important;
+}
+
+/* Ultra compact sidebar */
+.sidebar-ultra {
+    padding: 3px !important;
+}
+
+@media (min-width: 1024px) {
+    .project-grid-ultra {
+        grid-template-columns: repeat(15, minmax(0, 1fr)) !important;
+    }
+    
+    .skill-grid-ultra {
+        grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    .project-grid-ultra {
+        grid-template-columns: repeat(20, minmax(0, 1fr)) !important;
+    }
+    
+    .skill-grid-ultra {
+        grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+    }
+}
