@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card } from 'primereact/card';
 import { classNames } from 'primereact/utils';
 
@@ -12,7 +11,7 @@ const iconColors = {
 
 const DashboardInfoCard = ({ title, value, icon, iconColor = 'gray', descriptionValue, descriptionText }) => {
     return (
-        <div className="col-12 md:col-6 xl:col-3 p-2">
+        <div className="col-12 p-2 md:col-6 xl:col-3">
             <Card className="shadow-md">
                 <div className="flex items-center gap-4">
                     <div className={classNames('rounded-full p-3 text-2xl', iconColors[iconColor] || iconColors.gray)}>
@@ -21,8 +20,8 @@ const DashboardInfoCard = ({ title, value, icon, iconColor = 'gray', description
                     <div>
                         <div className="text-lg font-bold text-gray-800">{title}</div>
                         <div className="text-2xl font-extrabold text-blue-900">{value}</div>
-                        <div className="text-xs text-gray-500 mt-1">
-                            <span className="font-bold text-black mr-1">{descriptionValue}</span>
+                        <div className="mt-1 text-xs text-gray-500">
+                            <span className="mr-1 font-bold text-black">{descriptionValue}</span>
                             {descriptionText}
                         </div>
                     </div>

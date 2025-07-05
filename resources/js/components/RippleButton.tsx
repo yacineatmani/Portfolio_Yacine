@@ -1,27 +1,23 @@
 import React from 'react';
 
 export function RippleButton({ children, className = '', ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const button = e.currentTarget;
-    const circle = document.createElement('span');
-    const diameter = Math.max(button.clientWidth, button.clientHeight);
-    const radius = diameter / 2;
-    circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${e.clientX - button.getBoundingClientRect().left - radius}px`;
-    circle.style.top = `${e.clientY - button.getBoundingClientRect().top - radius}px`;
-    circle.className = 'ripple';
-    button.appendChild(circle);
-    setTimeout(() => circle.remove(), 600);
-  };
-  return (
-    <button
-      {...props}
-      className={`relative overflow-hidden ${className}`}
-      onClick={handleClick}
-    >
-      {children}
-    </button>
-  );
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const button = e.currentTarget;
+        const circle = document.createElement('span');
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${e.clientX - button.getBoundingClientRect().left - radius}px`;
+        circle.style.top = `${e.clientY - button.getBoundingClientRect().top - radius}px`;
+        circle.className = 'ripple';
+        button.appendChild(circle);
+        setTimeout(() => circle.remove(), 600);
+    };
+    return (
+        <button {...props} className={`relative overflow-hidden ${className}`} onClick={handleClick}>
+            {children}
+        </button>
+    );
 }
 
 // Ajoute ce CSS dans ton fichier global ou dashboard.css :

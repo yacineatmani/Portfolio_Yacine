@@ -185,7 +185,7 @@
     .project-grid-ultra {
         grid-template-columns: repeat(15, minmax(0, 1fr)) !important;
     }
-    
+
     .skill-grid-ultra {
         grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
     }
@@ -195,7 +195,7 @@
     .project-grid-ultra {
         grid-template-columns: repeat(20, minmax(0, 1fr)) !important;
     }
-    
+
     .skill-grid-ultra {
         grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
     }

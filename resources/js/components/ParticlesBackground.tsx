@@ -1,11 +1,10 @@
-import { useEffect, useMemo } from 'react';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-import React from "react";
+import { useEffect, useMemo } from 'react';
 
 export default function ParticlesBackground() {
     // Détecte le mode sombre
-    const isDark = typeof window !== "undefined" && document.documentElement.classList.contains('dark');
+    const isDark = typeof window !== 'undefined' && document.documentElement.classList.contains('dark');
 
     useEffect(() => {
         initParticlesEngine(async (engine) => {
@@ -89,9 +88,9 @@ export default function ParticlesBackground() {
             id="tsparticles"
             options={options}
             className="absolute inset-0"
-            style={{ 
+            style={{
                 zIndex: -1,
-                pointerEvents: 'none'
+                pointerEvents: 'none',
             }}
         />
     );

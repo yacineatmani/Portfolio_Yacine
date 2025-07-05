@@ -732,490 +732,523 @@
 
 // // Exporter le composant enveloppé avec le provider de notifications
 // export default withSnackbarProvider(Dashboard);
-import React, { useState } from 'react';
-import { Head, useForm, Link } from '@inertiajs/react';
+import '@/../css/dashboard.css';
+import { Transition } from '@headlessui/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { FaSun, FaMoon } from 'react-icons/fa';
-import Sidebar from '../components/Sidebar';
-import Topbar from '../components/Topbar';
+import React, { useState } from 'react';
+import { FaMoon, FaSun } from 'react-icons/fa';
 import Footer from '../components/Footer';
+import InputError from '../components/InputError';
+import InputLabel from '../components/InputLabel';
 import { useSnackbar, withSnackbarProvider } from '../components/Notifier';
+import ParticlesBackground from '../components/ParticlesBackground';
 import { RippleButton } from '../components/RippleButton';
 import TextInput from '../components/TextInput';
-import InputLabel from '../components/InputLabel';
-import InputError from '../components/InputError';
-import { Transition } from '@headlessui/react';
-import ParticlesBackground from '../components/ParticlesBackground';
-import '@/../css/dashboard.css';
+import Topbar from '../components/Topbar';
 
 interface User {
-  id: number;
-  name: string;
-  email: string;
-  photo?: string;
-  cv_path?: string;
+    id: number;
+    name: string;
+    email: string;
+    photo?: string;
+    cv_path?: string;
 }
 
 interface Project {
-  id: number;
-  title: string;
-  description: string;
-  technologies: string;
-  github_link?: string;
-  demo_link?: string;
-  image?: string;
+    id: number;
+    title: string;
+    description: string;
+    technologies: string;
+    github_link?: string;
+    demo_link?: string;
+    image?: string;
 }
 
 interface Skill {
-  id: number;
-  name: string;
-  level: string;
-  category: string;
+    id: number;
+    name: string;
+    level: string;
+    category: string;
 }
 
 interface DashboardPageProps {
-  auth: { user: User };
-  projects: Project[];
-  skills: Skill[];
+    auth: { user: User };
+    projects: Project[];
+    skills: Skill[];
 }
 
 function Dashboard({ auth, projects = [], skills = [] }: DashboardPageProps) {
-  const { user } = auth;
-  const [showProjectForm, setShowProjectForm] = useState(false);
-  const [showSkillForm, setShowSkillForm] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-  const { success, error } = useSnackbar();
+    const { user } = auth;
+    const [showProjectForm, setShowProjectForm] = useState(false);
+    const [showSkillForm, setShowSkillForm] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
+    const { success, error } = useSnackbar();
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
-  };
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+        document.documentElement.classList.toggle('dark');
+    };
 
-  const projectForm = useForm({
-    title: '',
-    description: '',
-    technologies: '',
-    github_link: '',
-    demo_link: '',
-    image: null as File | null,
-  });
-
-  const skillForm = useForm({
-    name: '',
-    level: 'débutant',
-    category: 'Frontend',
-  });
-
-  const cvForm = useForm({
-    cv: null as File | null,
-  });
-
-  const handleProjectSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    projectForm.post(route('dashboard.projects.store'), {
-      forceFormData: true,
-      onSuccess: () => {
-        projectForm.reset();
-        setShowProjectForm(false);
-        success('Projet ajouté !');
-      },
-      onError: () => error('Erreur lors de l\'ajout du projet.'),
+    const projectForm = useForm({
+        title: '',
+        description: '',
+        technologies: '',
+        github_link: '',
+        demo_link: '',
+        image: null as File | null,
     });
-  };
 
-  const handleSkillSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    skillForm.post(route('dashboard.skills.store'), {
-      onSuccess: () => {
-        skillForm.reset();
-        setShowSkillForm(false);
-        success('Compétence ajoutée !');
-      },
-      onError: () => error('Erreur lors de l\'ajout de la compétence.'),
+    const skillForm = useForm({
+        name: '',
+        level: 'débutant',
+        category: 'Frontend',
     });
-  };
 
-  const handleCvUpload = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!cvForm.data.cv) return;
-    cvForm.post(route('dashboard.cv.store'), {
-      forceFormData: true,
-      onSuccess: () => {
-        cvForm.reset('cv');
-        success('CV mis à jour !');
-      },
-      onError: () => error('Erreur lors de la mise à jour du CV.')
+    const cvForm = useForm({
+        cv: null as File | null,
     });
-  };
 
-  const handleDeleteProject = (id: number) => {
-    if (confirm('Supprimer ce projet ?')) {
-      const form = useForm({});
-      form.delete(route('dashboard.projects.destroy', id), {
-        onSuccess: () => success('Projet supprimé !'),
-        onError: () => error('Erreur lors de la suppression.'),
-      });
-    }
-  };
+    const handleProjectSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        projectForm.post(route('dashboard.projects.store'), {
+            forceFormData: true,
+            onSuccess: () => {
+                projectForm.reset();
+                setShowProjectForm(false);
+                success('Projet ajouté !');
+            },
+            onError: () => error("Erreur lors de l'ajout du projet."),
+        });
+    };
 
-  const handleDeleteSkill = (id: number) => {
-    if (confirm('Supprimer cette compétence ?')) {
-      const form = useForm({});
-      form.delete(route('dashboard.skills.destroy', id), {
-        onSuccess: () => success('Compétence supprimée !'),
-        onError: () => error('Erreur lors de la suppression.'),
-      });
-    }
-  };
+    const handleSkillSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        skillForm.post(route('dashboard.skills.store'), {
+            onSuccess: () => {
+                skillForm.reset();
+                setShowSkillForm(false);
+                success('Compétence ajoutée !');
+            },
+            onError: () => error("Erreur lors de l'ajout de la compétence."),
+        });
+    };
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Head title="Dashboard" />
-      <ParticlesBackground />
+    const handleCvUpload = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!cvForm.data.cv) return;
+        cvForm.post(route('dashboard.cv.store'), {
+            forceFormData: true,
+            onSuccess: () => {
+                cvForm.reset('cv');
+                success('CV mis à jour !');
+            },
+            onError: () => error('Erreur lors de la mise à jour du CV.'),
+        });
+    };
 
-      <motion.button
-        onClick={toggleDarkMode}
-        className="fixed top-4 right-4 z-50 p-2 rounded-full bg-indigo-600 dark:bg-gray-800 text-white shadow-md hover:bg-indigo-700 dark:hover:bg-gray-700 transition"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Basculer le mode sombre"
-      >
-        {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
-      </motion.button>
+    const handleDeleteProject = (id: number) => {
+        if (confirm('Supprimer ce projet ?')) {
+            const form = useForm({});
+            form.delete(route('dashboard.projects.destroy', id), {
+                onSuccess: () => success('Projet supprimé !'),
+                onError: () => error('Erreur lors de la suppression.'),
+            });
+        }
+    };
 
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+    const handleDeleteSkill = (id: number) => {
+        if (confirm('Supprimer cette compétence ?')) {
+            const form = useForm({});
+            form.delete(route('dashboard.skills.destroy', id), {
+                onSuccess: () => success('Compétence supprimée !'),
+                onError: () => error('Erreur lors de la suppression.'),
+            });
+        }
+    };
 
-      <Topbar onMenuClick={() => setSidebarOpen(true)} user={user} />
+    return (
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+            <Head title="Dashboard" />
+            <ParticlesBackground />
 
-      <div className="flex">
-        <aside
-          className={`fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white dark:bg-gray-800 shadow-lg border-r border-gray-200 dark:border-gray-700 z-40 transform transition-transform duration-300 lg:static lg:translate-x-0 ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
-        >
-          <div className="p-6 space-y-6">
-            <div className="text-center">
-              <img
-                src={user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6366f1&color=fff`}
-                alt="Photo de profil"
-                className="w-24 h-24 rounded-full mx-auto shadow-md border-2 border-indigo-500"
-              />
-              <h3 className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">{user.name}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{user.email}</p>
-            </div>
+            <motion.button
+                onClick={toggleDarkMode}
+                className="fixed top-4 right-4 z-50 rounded-full bg-indigo-600 p-2 text-white shadow-md transition hover:bg-indigo-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Basculer le mode sombre"
+            >
+                {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+            </motion.button>
 
-            <nav className="space-y-2">
-              <Link href="/" className="block text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">
-                Accueil
-              </Link>
-              <a href="#projects" className="block text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
-                Projets
-              </a>
-              <a href="#skills" className="block text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
-                Compétences
-              </a>
-              <a href="#cv" className="block text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
-                CV
-              </a>
-            </nav>
+            {sidebarOpen && <div className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={() => setSidebarOpen(false)} aria-hidden="true" />}
 
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-              <h4 className="font-semibold text-gray-800 dark:text-gray-200">Statistiques</h4>
-              <div className="grid grid-cols-2 gap-4 mt-2">
-                <div className="text-center">
-                  <div className="text-xl font-bold text-indigo-600">{projects.length}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Projets</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-indigo-600">{skills.length}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Compétences</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
+            <Topbar onMenuClick={() => setSidebarOpen(true)} user={user} />
 
-        <main className="flex-1 p-6 lg:ml-64">
-          <div className="max-w-6xl mx-auto space-y-8">
-            <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-              <div className="flex gap-2">
-                <Link href="/" className="action-btn">Accueil</Link>
-                <Link href="/profile" className="action-btn">Profil</Link>
-              </div>
-            </div>
-
-            <section className="glass-card">
-              <div className="profile-header">
-                <img
-                  src={user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6366f1&color=fff`}
-                  alt="Photo de profil"
-                  className="profile-photo"
-                />
-                <div className="profile-info">
-                  <h2 className="name">Bonjour, {user.name}</h2>
-                  <p className="status">Espace d'administration</p>
-                </div>
-              </div>
-            </section>
-
-            <div className="dashboard-main-grid">
-              <div className="space-y-8">
-                <section className="glass-card">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Projets</h3>
-                    <RippleButton
-                      onClick={() => setShowProjectForm(!showProjectForm)}
-                      className={`action-btn ${showProjectForm ? 'bg-red-600 hover:bg-red-700' : ''}`}
-                    >
-                      {showProjectForm ? 'Annuler' : 'Nouveau Projet'}
-                    </RippleButton>
-                  </div>
-
-                  <Transition
-                    show={showProjectForm}
-                    enter="transition duration-300"
-                    enterFrom="opacity-0 -translate-y-4"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition duration-200"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 -translate-y-4"
-                  >
-                    <form onSubmit={handleProjectSubmit} className="space-y-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <InputLabel htmlFor="title" value="Titre" />
-                          <TextInput
-                            id="title"
-                            value={projectForm.data.title}
-                            onChange={(e) => projectForm.setData('title', e.target.value)}
-                            required
-                          />
-                          <InputError message={projectForm.errors.title} />
+            <div className="flex">
+                <aside
+                    className={`fixed top-16 left-0 z-40 h-[calc(100vh-4rem)] w-64 transform border-r border-gray-200 bg-white shadow-lg transition-transform duration-300 lg:static lg:translate-x-0 dark:border-gray-700 dark:bg-gray-800 ${
+                        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                    }`}
+                >
+                    <div className="space-y-6 p-6">
+                        <div className="text-center">
+                            <img
+                                src={user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6366f1&color=fff`}
+                                alt="Photo de profil"
+                                className="mx-auto h-24 w-24 rounded-full border-2 border-indigo-500 shadow-md"
+                            />
+                            <h3 className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">{user.name}</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">{user.email}</p>
                         </div>
-                        <div>
-                          <InputLabel htmlFor="technologies" value="Technologies" />
-                          <TextInput
-                            id="technologies"
-                            value={projectForm.data.technologies}
-                            onChange={(e) => projectForm.setData('technologies', e.target.value)}
-                            placeholder="React, Laravel..."
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <InputLabel htmlFor="description" value="Description" />
-                        <textarea
-                          id="description"
-                          value={projectForm.data.description}
-                          onChange={(e) => projectForm.setData('description', e.target.value)}
-                          className="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                          rows={4}
-                          required
-                        />
-                        <InputError message={projectForm.errors.description} />
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <InputLabel htmlFor="github_link" value="GitHub" />
-                          <TextInput
-                            id="github_link"
-                            value={projectForm.data.github_link}
-                            onChange={(e) => projectForm.setData('github_link', e.target.value)}
-                            placeholder="https://github.com/..."
-                          />
-                        </div>
-                        <div>
-                          <InputLabel htmlFor="image" value="Image" />
-                          <input
-                            type="file"
-                            id="image"
-                            onChange={(e) => projectForm.setData('image', e.target.files ? e.target.files[0] : null)}
-                            className="w-full"
-                            accept="image/*"
-                          />
-                          <InputError message={projectForm.errors.image} />
-                        </div>
-                      </div>
-                      <RippleButton type="submit" disabled={projectForm.processing} className="action-btn">
-                        Enregistrer
-                      </RippleButton>
-                    </form>
-                  </Transition>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {projects.map((project, index) => (
-                      <div key={project.id} className="glass-card p-4">
-                        {project.image ? (
-                          <img
-                            src={`/storage/${project.image}`}
-                            alt={project.title}
-                            className="w-full h-40 object-cover rounded-lg"
-                          />
-                        ) : (
-                          <div className="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                            Projet
-                          </div>
-                        )}
-                        <h4 className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">{project.title}</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">{project.description}</p>
-                        <div className="flex flex-wrap gap-2 mt-2">
-                          {project.technologies.split(',').slice(0, 3).map((tech, i) => (
-                            <span key={i} className="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-2 py-1 rounded-full text-xs">
-                              {tech.trim()}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="flex gap-2 mt-4">
-                          {project.github_link && (
-                            <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="action-btn flex-1 text-center">
-                              GitHub
+                        <nav className="space-y-2">
+                            <Link
+                                href="/"
+                                className="block font-medium text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300"
+                            >
+                                Accueil
+                            </Link>
+                            <a href="#projects" className="block text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                                Projets
                             </a>
-                          )}
-                          {project.demo_link && (
-                            <a href={project.demo_link} target="_blank" rel="noopener noreferrer" className="action-btn flex-1 text-center">
-                              Demo
+                            <a href="#skills" className="block text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                                Compétences
                             </a>
-                          )}
-                          <RippleButton onClick={() => handleDeleteProject(project.id)} className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full">
-                            <span className="material-icons">delete</span>
-                          </RippleButton>
-                        </div>
-                      </div>
-                    ))}
-                    {!projects.length && (
-                      <div className="col-span-full text-center p-8">
-                        <p className="text-gray-500 dark:text-gray-400">Aucun projet. Ajoutez-en un !</p>
-                      </div>
-                    )}
-                  </div>
-                </section>
+                            <a href="#cv" className="block text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
+                                CV
+                            </a>
+                        </nav>
 
-                <section className="glass-card">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Compétences</h3>
-                    <RippleButton
-                      onClick={() => setShowSkillForm(!showSkillForm)}
-                      className={`action-btn ${showSkillForm ? 'bg-red-600 hover:bg-red-700' : ''}`}
-                    >
-                      {showSkillForm ? 'Annuler' : 'Nouvelle Compétence'}
-                    </RippleButton>
-                  </div>
-
-                  <Transition
-                    show={showSkillForm}
-                    enter="transition duration-300"
-                    enterFrom="opacity-0 -translate-y-4"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition duration-200"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 -translate-y-4"
-                  >
-                    <form onSubmit={handleSkillSubmit} className="space-y-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <InputLabel htmlFor="name" value="Compétence" />
-                          <TextInput
-                            id="name"
-                            value={skillForm.data.name}
-                            onChange={(e) => skillForm.setData('name', e.target.value)}
-                            required
-                          />
-                          <InputError message={skillForm.errors.name} />
+                        <div className="rounded-lg bg-gray-100 p-4 dark:bg-gray-700">
+                            <h4 className="font-semibold text-gray-800 dark:text-gray-200">Statistiques</h4>
+                            <div className="mt-2 grid grid-cols-2 gap-4">
+                                <div className="text-center">
+                                    <div className="text-xl font-bold text-indigo-600">{projects.length}</div>
+                                    <div className="text-xs text-gray-600 dark:text-gray-400">Projets</div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-xl font-bold text-indigo-600">{skills.length}</div>
+                                    <div className="text-xs text-gray-600 dark:text-gray-400">Compétences</div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                          <InputLabel htmlFor="level" value="Niveau" />
-                          <select
-                            id="level"
-                            value={skillForm.data.level}
-                            onChange={(e) => skillForm.setData('level', e.target.value)}
-                            className="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                          >
-                            <option value="débutant">Débutant</option>
-                            <option value="confirmé">Confirmé</option>
-                            <option value="expert">Expert</option>
-                          </select>
-                        </div>
-                      </div>
-                      <RippleButton type="submit" disabled={skillForm.processing} className="action-btn">
-                        Enregistrer
-                      </RippleButton>
-                    </form>
-                  </Transition>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {skills.map((skill) => (
-                      <div key={skill.id} className="glass-card p-4">
-                        <div className="flex justify-between">
-                          <div>
-                            <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h4>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 capitalize">{skill.level}</p>
-                          </div>
-                          <RippleButton onClick={() => handleDeleteSkill(skill.id)} className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full">
-                            <span className="material-icons">delete</span>
-                          </RippleButton>
-                        </div>
-                        <div className="mt-2 bg-gray-200 dark:bg-gray-600 rounded-full h-2">
-                          <div
-                            className={`h-2 rounded-full ${
-                              skill.level === 'débutant' ? 'bg-green-500 w-1/3' : skill.level === 'confirmé' ? 'bg-blue-500 w-2/3' : 'bg-purple-500 w-full'
-                            }`}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                    {!skills.length && (
-                      <div className="col-span-full text-center p-8">
-                        <p className="text-gray-500 dark:text-gray-400">Aucune compétence. Ajoutez-en une !</p>
-                      </div>
-                    )}
-                  </div>
-                </section>
-              </div>
-
-              <aside className="sticky top-24">
-                <section className="glass-card p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">CV</h3>
-                  <form onSubmit={handleCvUpload} className="space-y-4">
-                    <div>
-                      <InputLabel htmlFor="cv" value="Nouveau CV (PDF)" />
-                      <input
-                        type="file"
-                        id="cv"
-                        onChange={(e) => cvForm.setData('cv', e.target.files ? e.target.files[0] : null)}
-                        className="w-full"
-                        accept=".pdf,.doc,.docx"
-                      />
-                      <InputError message={cvForm.errors.cv} />
                     </div>
-                    <RippleButton type="submit" disabled={cvForm.processing || !cvForm.data.cv} className="action-btn w-full">
-                      Mettre à jour
-                    </RippleButton>
-                  </form>
-                  {user.cv_path && (
-                    <div className="mt-4">
-                      <a href={`/storage/${user.cv_path}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
-                        Voir mon CV
-                      </a>
+                </aside>
+
+                <main className="flex-1 p-6 lg:ml-64">
+                    <div className="mx-auto max-w-6xl space-y-8">
+                        <div className="flex items-center justify-between">
+                            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+                            <div className="flex gap-2">
+                                <Link href="/" className="action-btn">
+                                    Accueil
+                                </Link>
+                                <Link href="/profile" className="action-btn">
+                                    Profil
+                                </Link>
+                            </div>
+                        </div>
+
+                        <section className="glass-card">
+                            <div className="profile-header">
+                                <img
+                                    src={
+                                        user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6366f1&color=fff`
+                                    }
+                                    alt="Photo de profil"
+                                    className="profile-photo"
+                                />
+                                <div className="profile-info">
+                                    <h2 className="name">Bonjour, {user.name}</h2>
+                                    <p className="status">Espace d'administration</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div className="dashboard-main-grid">
+                            <div className="space-y-8">
+                                <section className="glass-card">
+                                    <div className="mb-4 flex items-center justify-between">
+                                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Projets</h3>
+                                        <RippleButton
+                                            onClick={() => setShowProjectForm(!showProjectForm)}
+                                            className={`action-btn ${showProjectForm ? 'bg-red-600 hover:bg-red-700' : ''}`}
+                                        >
+                                            {showProjectForm ? 'Annuler' : 'Nouveau Projet'}
+                                        </RippleButton>
+                                    </div>
+
+                                    <Transition
+                                        show={showProjectForm}
+                                        enter="transition duration-300"
+                                        enterFrom="opacity-0 -translate-y-4"
+                                        enterTo="opacity-100 translate-y-0"
+                                        leave="transition duration-200"
+                                        leaveFrom="opacity-100 translate-y-0"
+                                        leaveTo="opacity-0 -translate-y-4"
+                                    >
+                                        <form onSubmit={handleProjectSubmit} className="space-y-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                <div>
+                                                    <InputLabel htmlFor="title" value="Titre" />
+                                                    <TextInput
+                                                        id="title"
+                                                        value={projectForm.data.title}
+                                                        onChange={(e) => projectForm.setData('title', e.target.value)}
+                                                        required
+                                                    />
+                                                    <InputError message={projectForm.errors.title} />
+                                                </div>
+                                                <div>
+                                                    <InputLabel htmlFor="technologies" value="Technologies" />
+                                                    <TextInput
+                                                        id="technologies"
+                                                        value={projectForm.data.technologies}
+                                                        onChange={(e) => projectForm.setData('technologies', e.target.value)}
+                                                        placeholder="React, Laravel..."
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <InputLabel htmlFor="description" value="Description" />
+                                                <textarea
+                                                    id="description"
+                                                    value={projectForm.data.description}
+                                                    onChange={(e) => projectForm.setData('description', e.target.value)}
+                                                    className="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                                    rows={4}
+                                                    required
+                                                />
+                                                <InputError message={projectForm.errors.description} />
+                                            </div>
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                <div>
+                                                    <InputLabel htmlFor="github_link" value="GitHub" />
+                                                    <TextInput
+                                                        id="github_link"
+                                                        value={projectForm.data.github_link}
+                                                        onChange={(e) => projectForm.setData('github_link', e.target.value)}
+                                                        placeholder="https://github.com/..."
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <InputLabel htmlFor="image" value="Image" />
+                                                    <input
+                                                        type="file"
+                                                        id="image"
+                                                        onChange={(e) => projectForm.setData('image', e.target.files ? e.target.files[0] : null)}
+                                                        className="w-full"
+                                                        accept="image/*"
+                                                    />
+                                                    <InputError message={projectForm.errors.image} />
+                                                </div>
+                                            </div>
+                                            <RippleButton type="submit" disabled={projectForm.processing} className="action-btn">
+                                                Enregistrer
+                                            </RippleButton>
+                                        </form>
+                                    </Transition>
+
+                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                        {projects.map((project, index) => (
+                                            <div key={project.id} className="glass-card p-4">
+                                                {project.image ? (
+                                                    <img
+                                                        src={`/storage/${project.image}`}
+                                                        alt={project.title}
+                                                        className="h-40 w-full rounded-lg object-cover"
+                                                    />
+                                                ) : (
+                                                    <div className="flex h-40 w-full items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700">
+                                                        Projet
+                                                    </div>
+                                                )}
+                                                <h4 className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">{project.title}</h4>
+                                                <p className="line-clamp-3 text-sm text-gray-600 dark:text-gray-400">{project.description}</p>
+                                                <div className="mt-2 flex flex-wrap gap-2">
+                                                    {project.technologies
+                                                        .split(',')
+                                                        .slice(0, 3)
+                                                        .map((tech, i) => (
+                                                            <span
+                                                                key={i}
+                                                                className="rounded-full bg-indigo-100 px-2 py-1 text-xs text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200"
+                                                            >
+                                                                {tech.trim()}
+                                                            </span>
+                                                        ))}
+                                                </div>
+                                                <div className="mt-4 flex gap-2">
+                                                    {project.github_link && (
+                                                        <a
+                                                            href={project.github_link}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="action-btn flex-1 text-center"
+                                                        >
+                                                            GitHub
+                                                        </a>
+                                                    )}
+                                                    {project.demo_link && (
+                                                        <a
+                                                            href={project.demo_link}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="action-btn flex-1 text-center"
+                                                        >
+                                                            Demo
+                                                        </a>
+                                                    )}
+                                                    <RippleButton
+                                                        onClick={() => handleDeleteProject(project.id)}
+                                                        className="rounded-full bg-red-600 p-2 text-white hover:bg-red-700"
+                                                    >
+                                                        <span className="material-icons">delete</span>
+                                                    </RippleButton>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {!projects.length && (
+                                            <div className="col-span-full p-8 text-center">
+                                                <p className="text-gray-500 dark:text-gray-400">Aucun projet. Ajoutez-en un !</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </section>
+
+                                <section className="glass-card">
+                                    <div className="mb-4 flex items-center justify-between">
+                                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Compétences</h3>
+                                        <RippleButton
+                                            onClick={() => setShowSkillForm(!showSkillForm)}
+                                            className={`action-btn ${showSkillForm ? 'bg-red-600 hover:bg-red-700' : ''}`}
+                                        >
+                                            {showSkillForm ? 'Annuler' : 'Nouvelle Compétence'}
+                                        </RippleButton>
+                                    </div>
+
+                                    <Transition
+                                        show={showSkillForm}
+                                        enter="transition duration-300"
+                                        enterFrom="opacity-0 -translate-y-4"
+                                        enterTo="opacity-100 translate-y-0"
+                                        leave="transition duration-200"
+                                        leaveFrom="opacity-100 translate-y-0"
+                                        leaveTo="opacity-0 -translate-y-4"
+                                    >
+                                        <form onSubmit={handleSkillSubmit} className="space-y-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                <div>
+                                                    <InputLabel htmlFor="name" value="Compétence" />
+                                                    <TextInput
+                                                        id="name"
+                                                        value={skillForm.data.name}
+                                                        onChange={(e) => skillForm.setData('name', e.target.value)}
+                                                        required
+                                                    />
+                                                    <InputError message={skillForm.errors.name} />
+                                                </div>
+                                                <div>
+                                                    <InputLabel htmlFor="level" value="Niveau" />
+                                                    <select
+                                                        id="level"
+                                                        value={skillForm.data.level}
+                                                        onChange={(e) => skillForm.setData('level', e.target.value)}
+                                                        className="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                                    >
+                                                        <option value="débutant">Débutant</option>
+                                                        <option value="confirmé">Confirmé</option>
+                                                        <option value="expert">Expert</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <RippleButton type="submit" disabled={skillForm.processing} className="action-btn">
+                                                Enregistrer
+                                            </RippleButton>
+                                        </form>
+                                    </Transition>
+
+                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                        {skills.map((skill) => (
+                                            <div key={skill.id} className="glass-card p-4">
+                                                <div className="flex justify-between">
+                                                    <div>
+                                                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h4>
+                                                        <p className="text-sm text-gray-600 capitalize dark:text-gray-400">{skill.level}</p>
+                                                    </div>
+                                                    <RippleButton
+                                                        onClick={() => handleDeleteSkill(skill.id)}
+                                                        className="rounded-full bg-red-600 p-2 text-white hover:bg-red-700"
+                                                    >
+                                                        <span className="material-icons">delete</span>
+                                                    </RippleButton>
+                                                </div>
+                                                <div className="mt-2 h-2 rounded-full bg-gray-200 dark:bg-gray-600">
+                                                    <div
+                                                        className={`h-2 rounded-full ${
+                                                            skill.level === 'débutant'
+                                                                ? 'w-1/3 bg-green-500'
+                                                                : skill.level === 'confirmé'
+                                                                  ? 'w-2/3 bg-blue-500'
+                                                                  : 'w-full bg-purple-500'
+                                                        }`}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {!skills.length && (
+                                            <div className="col-span-full p-8 text-center">
+                                                <p className="text-gray-500 dark:text-gray-400">Aucune compétence. Ajoutez-en une !</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </section>
+                            </div>
+
+                            <aside className="sticky top-24">
+                                <section className="glass-card p-6">
+                                    <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">CV</h3>
+                                    <form onSubmit={handleCvUpload} className="space-y-4">
+                                        <div>
+                                            <InputLabel htmlFor="cv" value="Nouveau CV (PDF)" />
+                                            <input
+                                                type="file"
+                                                id="cv"
+                                                onChange={(e) => cvForm.setData('cv', e.target.files ? e.target.files[0] : null)}
+                                                className="w-full"
+                                                accept=".pdf,.doc,.docx"
+                                            />
+                                            <InputError message={cvForm.errors.cv} />
+                                        </div>
+                                        <RippleButton type="submit" disabled={cvForm.processing || !cvForm.data.cv} className="action-btn w-full">
+                                            Mettre à jour
+                                        </RippleButton>
+                                    </form>
+                                    {user.cv_path && (
+                                        <div className="mt-4">
+                                            <a
+                                                href={`/storage/${user.cv_path}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300"
+                                            >
+                                                Voir mon CV
+                                            </a>
+                                        </div>
+                                    )}
+                                </section>
+                            </aside>
+                        </div>
                     </div>
-                  )}
-                </section>
-              </aside>
+                </main>
             </div>
-          </div>
-        </main>
-      </div>
 
-      <Footer />
-    </div>
-  );
+            <Footer />
+        </div>
+    );
 }
 
 export default withSnackbarProvider(Dashboard);

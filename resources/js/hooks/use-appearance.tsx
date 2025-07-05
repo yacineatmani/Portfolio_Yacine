@@ -70,5 +70,4 @@ export function useAppearance() {
     }, [updateAppearance]);
 
     return { appearance, updateAppearance } as const;
-
 }

@@ -66,12 +66,11 @@
 //     );
 // }
 
-
-import React, { FormEvent, ChangeEvent } from 'react';
 import { Head, useForm } from '@inertiajs/react';
+import { ChangeEvent, FormEvent } from 'react';
 import InputError from '../../components/input-error';
-import TextInput from '../../components/TextInput';
 import PrimaryButton from '../../components/PrimaryButton';
+import TextInput from '../../components/TextInput';
 
 export default function Login() {
     const { data, setData, post, processing, errors } = useForm({
@@ -91,11 +90,11 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900">
             <Head title="Connexion" />
 
-            <form onSubmit={handleSubmit} className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-                <h1 className="text-2xl font-bold mb-6 text-center">Connexion</h1>
+            <form onSubmit={handleSubmit} className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+                <h1 className="mb-6 text-center text-2xl font-bold">Connexion</h1>
 
                 <div className="mb-4">
                     <TextInput
@@ -127,14 +126,7 @@ export default function Login() {
                 </div>
 
                 <div className="mb-6 flex items-center">
-                    <input
-                        id="remember"
-                        name="remember"
-                        type="checkbox"
-                        checked={data.remember}
-                        onChange={handleChange}
-                        className="mr-2"
-                    />
+                    <input id="remember" name="remember" type="checkbox" checked={data.remember} onChange={handleChange} className="mr-2" />
                     <label htmlFor="remember" className="text-gray-700">
                         Se souvenir de moi
                     </label>

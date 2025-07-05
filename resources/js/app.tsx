@@ -1,10 +1,10 @@
 import '../css/app.css';
 
-import { createRoot } from 'react-dom/client';
+import { LayoutProvider } from '@/layouts/layout/context/layoutcontext.jsx';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { PrimeReactProvider } from 'primereact/api';
-import { LayoutProvider } from '@/layouts/layout/context/layoutcontext.jsx';
+import { createRoot } from 'react-dom/client';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -19,7 +19,7 @@ createInertiaApp({
                 <LayoutProvider>
                     <App {...props} />
                 </LayoutProvider>
-            </PrimeReactProvider>
+            </PrimeReactProvider>,
         );
     },
     progress: {

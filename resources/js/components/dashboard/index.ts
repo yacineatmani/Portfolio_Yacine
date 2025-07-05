@@ -1,4 +1,4 @@
 export { ProjectCard } from './ProjectCard';
-export { SkillCard } from './SkillCard';
 export { ProjectForm } from './ProjectForm';
+export { SkillCard } from './SkillCard';
 export { SkillForm } from './SkillForm';

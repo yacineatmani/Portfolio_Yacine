@@ -43,33 +43,33 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 interface FallingTextProps {
-  text: string;
-  highlightWords: string[];
-  highlightClass: string;
-  trigger: string;
-  backgroundColor: string;
-  wireframes: boolean;
-  gravity: number;
-  mouseConstraintStiffness: number;
-  fontSize: string;
-  className?: string; // Ajout pour corriger TS2322
+    text: string;
+    highlightWords: string[];
+    highlightClass: string;
+    trigger: string;
+    backgroundColor: string;
+    wireframes: boolean;
+    gravity: number;
+    mouseConstraintStiffness: number;
+    fontSize: string;
+    className?: string; // Ajout pour corriger TS2322
 }
 interface RotatingTextProps {
-  texts: string[];
-  transition?: { type?: string; damping?: number; stiffness?: number };
-  initial?: { y?: string; opacity?: number };
-  animate?: { y?: number; opacity?: number };
-  exit?: { y?: string; opacity?: number };
-  animatePresenceMode?: "wait" | "sync" | "popLayout"; // <-- ici !
-  animatePresenceInitial?: boolean;
-  rotationInterval?: number;
-  staggerDuration?: number;
-  staggerFrom?: string;
-  loop?: boolean;
-  auto?: boolean;
-  splitBy?: string;
-  onNext?: (index: number) => void;
-  mainClassName?: string;
-  splitLevelClassName?: string;
-  elementLevelClassName?: string;
+    texts: string[];
+    transition?: { type?: string; damping?: number; stiffness?: number };
+    initial?: { y?: string; opacity?: number };
+    animate?: { y?: number; opacity?: number };
+    exit?: { y?: string; opacity?: number };
+    animatePresenceMode?: 'wait' | 'sync' | 'popLayout'; // <-- ici !
+    animatePresenceInitial?: boolean;
+    rotationInterval?: number;
+    staggerDuration?: number;
+    staggerFrom?: string;
+    loop?: boolean;
+    auto?: boolean;
+    splitBy?: string;
+    onNext?: (index: number) => void;
+    mainClassName?: string;
+    splitLevelClassName?: string;
+    elementLevelClassName?: string;
 }

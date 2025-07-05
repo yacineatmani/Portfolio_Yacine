@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import { createContext, useState } from 'react';
 
 export const LayoutContext = createContext({});
 
@@ -9,7 +9,7 @@ export const LayoutProvider = ({ children }) => {
         menuMode: 'static',
         colorScheme: 'light',
         theme: 'tailwind-light',
-        scale: 14
+        scale: 14,
     });
 
     const [layoutState, setLayoutState] = useState({
@@ -18,7 +18,7 @@ export const LayoutProvider = ({ children }) => {
         profileSidebarVisible: false,
         configSidebarVisible: false,
         staticMenuMobileActive: false,
-        menuHoverActive: false
+        menuHoverActive: false,
     });
 
     const onMenuToggle = () => {
@@ -51,7 +51,7 @@ export const LayoutProvider = ({ children }) => {
         layoutState,
         setLayoutState,
         onMenuToggle,
-        showProfileSidebar
+        showProfileSidebar,
     };
 
     return <LayoutContext.Provider value={value}>{children}</LayoutContext.Provider>;
