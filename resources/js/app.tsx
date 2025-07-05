@@ -1,6 +1,6 @@
 import '../css/app.css';
 
-import { LayoutProvider } from '@/layouts/layout/context/layoutcontext.jsx';
+import { LayoutProvider } from '@/layouts/layout/context/layoutcontext';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { PrimeReactProvider } from 'primereact/api';
