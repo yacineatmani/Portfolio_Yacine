@@ -11,8 +11,8 @@
         "dev": "vite",
         "predeploy": "npm run build:static",
         "deploy": "gh-pages -d dist",
-        "format": "prettier --write resources/",
-        "format:check": "prettier --check resources/",
+        "format": "prettier --write resources/ --ignore-path .prettierignore",
+        "format:check": "prettier --check resources/ --ignore-path .prettierignore",
         "lint": "eslint . --fix",
         "types": "tsc --noEmit"
     },

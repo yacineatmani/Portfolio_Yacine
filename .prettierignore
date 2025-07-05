@@ -1,0 +1,13 @@
+# Ignore problematic files and folders
+resources/Dash/material-dashboard-laravel-master/
+vendor/
+node_modules/
+build/
+dist/
+storage/
+bootstrap/cache/
+public/hot
+public/storage
+*.min.css
+*.min.js
+*.log
