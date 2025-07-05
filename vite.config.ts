@@ -6,7 +6,7 @@ import path from 'path';
 export default defineConfig(({ mode }) => {
   if (mode === 'static') {
     return {
-      base: '/Portfolio/', // Changez selon votre nom de repo GitHub
+      base: '/portifolio_Yacine/', // Nom exact du repository GitHub
       plugins: [react()],
       build: {
         outDir: 'dist',
