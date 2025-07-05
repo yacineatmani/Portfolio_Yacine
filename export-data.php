@@ -26,8 +26,8 @@ try {
             'name' => $user->name,
             'first_name' => $user->first_name,
             'bio' => $user->bio,
-            'photo' => $user->photo,
-            'cv' => $user->cv,
+            'photo' => $user->photo ? "storage/{$user->photo}" : "images/profile-placeholder.jpg",
+            'cv' => $user->cv ? "storage/{$user->cv}" : "cv.pdf",
         ],
         'projects' => $projects->map(function ($project) {
             return [
@@ -36,7 +36,7 @@ try {
                 'description' => $project->description,
                 'github_link' => $project->github_link,
                 'demo_link' => $project->demo_link,
-                'image' => $project->image,
+                'image' => $project->image ? "storage/{$project->image}" : "images/project-placeholder.jpg",
                 'stack' => $project->technologies ? explode(',', $project->technologies) : [],
                 'challenges' => $project->description,
                 'video' => null
