@@ -1,0 +1,190 @@
+{
+    "user": {
+        "id": 1,
+        "name": "Atmani",
+        "first_name": "Yacine",
+        "bio": "Développeur Fullstack passionné par Laravel, React et les technologies modernes.",
+        "photo": "profile\/photo.jpg",
+        "cv": "cv\/01JZ6EXQJTTW9ZNE9G5VC9ZFK5.pdf"
+    },
+    "projects": [
+        {
+            "id": 2,
+            "title": "Next-Librairie",
+            "description": "bibliotheque",
+            "github_link": "https:\/\/github.com\/yacineatmani\/Next-Libraire",
+            "demo_link": "https:\/\/github.com\/yacineatmani\/Next-Libraire",
+            "image": "projects\/NF6Pvbb4wIWUgacXbdU9TBPP82CJ5dhPYhcOHaq6.png",
+            "stack": [],
+            "challenges": "bibliotheque",
+            "video": null
+        },
+        {
+            "id": 3,
+            "title": "Adam_vs_Yacine",
+            "description": "Chef-d'œuvre d'ingénierie du backend CSS  . Insolent!!",
+            "github_link": "https:\/\/github.com\/yacineatmani\/gestion-librairie",
+            "demo_link": "https:\/\/github.com\/yacineatmani\/gestion-librairie",
+            "image": "projects\/VlYo2Gh2p54gVMNXpYDddEIcbTPMD7YyFQbrvvJo.png",
+            "stack": [],
+            "challenges": "Chef-d'œuvre d'ingénierie du backend CSS  . Insolent!!",
+            "video": null
+        },
+        {
+            "id": 4,
+            "title": "Next_E_commerce",
+            "description": "Libraire en ligne",
+            "github_link": "https:\/\/github.com\/yacineatmani\/gestion-librairie",
+            "demo_link": "https:\/\/github.com\/yacineatmani\/gestion-librairie",
+            "image": "projects\/hjdDFZY7AYyIdLvfVNcYb7P65FmP9joEiLNsyzPy.png",
+            "stack": [],
+            "challenges": "Libraire en ligne",
+            "video": null
+        },
+        {
+            "id": 5,
+            "title": "All_Nation_in_Word",
+            "description": "Description on cities in the world.",
+            "github_link": "https:\/\/github.com\/yacineatmani\/Project_Flag",
+            "demo_link": "https:\/\/yacineatmani.github.io\/Project_Flag",
+            "image": "projects\/01JZ6D9VRAN5YP2HRY3GPJ110H.png",
+            "stack": [
+                "React ",
+                "tailwind",
+                " react_router",
+                ""
+            ],
+            "challenges": "Description on cities in the world.",
+            "video": null
+        },
+        {
+            "id": 6,
+            "title": "Portfolio Laravel React",
+            "description": "Un portfolio moderne construit avec Laravel et React, incluant un panneau d'administration Filament.",
+            "github_link": "https:\/\/github.com\/yacineatmani\/portfolio",
+            "demo_link": "https:\/\/portfolio.demo.com",
+            "image": null,
+            "stack": [
+                "Laravel",
+                "React",
+                "Filament",
+                "Tailwind CSS",
+                "MySQL"
+            ],
+            "challenges": "Un portfolio moderne construit avec Laravel et React, incluant un panneau d'administration Filament.",
+            "video": null
+        },
+        {
+            "id": 7,
+            "title": "Système de Gestion E-commerce",
+            "description": "Plateforme e-commerce complète avec gestion des stocks, commandes et paiements.",
+            "github_link": "https:\/\/github.com\/yacineatmani\/ecommerce",
+            "demo_link": "https:\/\/ecommerce.demo.com",
+            "image": null,
+            "stack": [
+                "Laravel",
+                "Vue.js",
+                "Stripe",
+                "Redis",
+                "Docker"
+            ],
+            "challenges": "Plateforme e-commerce complète avec gestion des stocks, commandes et paiements.",
+            "video": null
+        },
+        {
+            "id": 8,
+            "title": "Application de Chat Temps Réel",
+            "description": "Application de messagerie instantanée avec notifications push et partage de fichiers.",
+            "github_link": "https:\/\/github.com\/yacineatmani\/chat-app",
+            "demo_link": "https:\/\/chat.demo.com",
+            "image": null,
+            "stack": [
+                "Node.js",
+                "Socket.io",
+                "React",
+                "MongoDB",
+                "WebRTC"
+            ],
+            "challenges": "Application de messagerie instantanée avec notifications push et partage de fichiers.",
+            "video": null
+        }
+    ],
+    "skills": [
+        {
+            "id": 1,
+            "name": "Laravel",
+            "level": "Expert"
+        },
+        {
+            "id": 2,
+            "name": "React",
+            "level": "Avancé"
+        },
+        {
+            "id": 3,
+            "name": "Node.js",
+            "level": "Intermédiaire"
+        },
+        {
+            "id": 4,
+            "name": "Docker",
+            "level": "Intermédiaire"
+        },
+        {
+            "id": 6,
+            "name": "Next.js",
+            "level": "confirmé"
+        },
+        {
+            "id": 7,
+            "name": "kubernetes",
+            "level": "confirmé"
+        },
+        {
+            "id": 8,
+            "name": "Git",
+            "level": "confirmé"
+        },
+        {
+            "id": 9,
+            "name": "Docker",
+            "level": "expert"
+        },
+        {
+            "id": 10,
+            "name": "Terraform",
+            "level": "confirmé"
+        },
+        {
+            "id": 11,
+            "name": "Vue.js",
+            "level": "Avancé"
+        },
+        {
+            "id": 12,
+            "name": "PHP",
+            "level": "Expert"
+        },
+        {
+            "id": 13,
+            "name": "JavaScript",
+            "level": "Expert"
+        },
+        {
+            "id": 14,
+            "name": "TypeScript",
+            "level": "Avancé"
+        },
+        {
+            "id": 15,
+            "name": "MySQL",
+            "level": "Avancé"
+        },
+        {
+            "id": 16,
+            "name": "Tailwind CSS",
+            "level": "Avancé"
+        }
+    ],
+    "experiences": []
+}
