@@ -34,6 +34,11 @@ jobs:
     - name: Build static site
       run: npm run build:static
 
+    - name: Copy storage assets to public
+      run: |
+        mkdir -p public/storage/projects public/storage/profile public/storage/cv
+        # Ces dossiers seront vides sur GitHub mais évitent les erreurs 404
+
     - name: Copy assets for GitHub Pages
       run: |
         cp -r public/images dist/images || true

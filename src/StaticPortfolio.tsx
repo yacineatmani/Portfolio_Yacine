@@ -4,32 +4,22 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { debounce } from 'lodash';
 import { FaGithub, FaExternalLinkAlt, FaMoon, FaSun, FaArrowUp, FaCheckCircle, FaExclamationCircle, FaLinkedin, FaDownload } from 'react-icons/fa';
-import staticData from './data.json';
+import dataImport from './data.json';
 
 gsap.registerPlugin(ScrollTrigger);
-    { id: 7, name: "MySQL", level: "Avancé" },
-    { id: 8, name: "Git", level: "Avancé" },
-    { id: 9, name: "Docker", level: "Intermédiaire" },
-    { id: 10, name: "Node.js", level: "Avancé" }
-  ],
-  experiences: [
-    {
-      id: 1,
-      role: "Développeur Full Stack",
-      company: "MolenGeek",
-      period: "2024 - Présent",
-      description: "Formation intensive en développement web moderne avec React, Laravel et technologies actuelles",
-      tech: ["React", "Laravel", "TypeScript", "PHP", "MySQL"]
+
+// Adapter les chemins d'images pour GitHub Pages
+const staticData = {
+    ...dataImport,
+    user: {
+        ...dataImport.user,
+        photo: dataImport.user.photo ? `/portifolio_Yacine/storage/${dataImport.user.photo}` : '/portifolio_Yacine/images/profile-placeholder.jpg',
+        cv: dataImport.user.cv ? `/portifolio_Yacine/storage/${dataImport.user.cv}` : '/portifolio_Yacine/cv.pdf'
     },
-    {
-      id: 2,
-      role: "Développeur Frontend",
-      company: "Projets Personnels",
-      period: "2023 - 2024",
-      description: "Développement d'applications web avec focus sur l'expérience utilisateur",
-      tech: ["React", "JavaScript", "CSS", "HTML"]
-    }
-  ]
+    projects: dataImport.projects.map(project => ({
+        ...project,
+        image: project.image ? `/portifolio_Yacine/storage/${project.image}` : '/portifolio_Yacine/images/project-placeholder.jpg'
+    }))
 };
 
 interface User {
