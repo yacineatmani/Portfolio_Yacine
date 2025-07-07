@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import StaticPortfolio from './StaticPortfolio';
+import WorkingPortfolio from './WorkingPortfolio';
 import './style.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <StaticPortfolio />
+    <WorkingPortfolio />
   </React.StrictMode>
 );

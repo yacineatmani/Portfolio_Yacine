@@ -13,16 +13,23 @@ const staticData = {
     user: {
         ...dataImport.user,
         name: `${dataImport.user.first_name} ${dataImport.user.name}`,
-        photo: dataImport.user.photo ? `/portifolio_Yacine/${dataImport.user.photo}` : '/portifolio_Yacine/images/profile-placeholder.jpg',
-        cv: dataImport.user.cv ? `/portifolio_Yacine/${dataImport.user.cv}` : '/portifolio_Yacine/cv.pdf'
+        photo: '/portifolio_Yacine/images/profile-placeholder.jpg', // Image de test statique
+        cv: dataImport.user.cv ? `/portifolio_Yacine/storage/${dataImport.user.cv}` : '/portifolio_Yacine/cv.pdf'
     },
-    projects: dataImport.projects.map(project => ({
+    projects: dataImport.projects.map((project, index) => ({
         ...project,
-        image: project.image ? `/portifolio_Yacine/${project.image}` : '/portifolio_Yacine/images/project-placeholder.jpg'
+        image: '/portifolio_Yacine/images/project-placeholder.jpg' // Image de test statique pour tous
     })),
     skills: dataImport.skills,
     experiences: dataImport.experiences || []
 };
+
+// Debug pour vérifier les chemins
+console.log('🔍 Debug StaticData:', {
+    userPhoto: staticData.user.photo,
+    firstProjectImage: staticData.projects[0]?.image,
+    totalProjects: staticData.projects.length
+});
 
 // Types
 interface User {
@@ -61,6 +68,41 @@ interface Experience {
     tech: string[];
 }
 
+interface FallingTextProps {
+    text: string;
+    style: React.CSSProperties;
+    speed?: number;
+}
+
+// Composant FallingText
+const FallingText: React.FC<FallingTextProps> = ({ text, style, speed = 2 }) => {
+    const textRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const element = textRef.current;
+        if (element) {
+            gsap.fromTo(
+                element,
+                { y: -100, opacity: 0 },
+                {
+                    y: 600,
+                    opacity: 1,
+                    duration: speed,
+                    ease: 'power1.inOut',
+                    repeat: -1,
+                    yoyo: true,
+                },
+            );
+        }
+    }, [text, speed]);
+
+    return (
+        <div ref={textRef} style={style}>
+            {text}
+        </div>
+    );
+};
+
 // Composants helper
 const RotatingText: React.FC<{ texts: string[]; style: React.CSSProperties; interval?: number }> = ({ texts, style, interval = 3000 }) => {
     const [index, setIndex] = useState(0);
@@ -96,6 +138,152 @@ const StaticPortfolio: React.FC = () => {
         const initialTheme = storedTheme === 'dark' || (!storedTheme && prefersDark);
         setDarkMode(initialTheme);
         document.documentElement.classList.toggle('dark', initialTheme);
+        
+        // Animation du background avec GSAP
+        gsap.to('body', {
+            background: initialTheme ? 'linear-gradient(135deg, #1a202c, #2d3748)' : 'linear-gradient(135deg, #ffffff, #e6f0fa)',
+            duration: 1.5,
+            ease: 'power2.inOut',
+        });
+
+        const handleScroll = debounce(() => {
+            setShowBackToTop(window.scrollY > 200);
+        }, 16);
+        window.addEventListener('scroll', handleScroll);
+
+        // Animations GSAP
+        const heroImage = heroRef.current?.querySelector('.hero-image');
+        if (heroImage) {
+            gsap.fromTo(
+                heroImage,
+                { y: 0 },
+                { y: 50, ease: 'power1.out', scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true } },
+            );
+        }
+
+        const heroContent = heroRef.current?.querySelector('.hero-content');
+        if (heroContent) {
+            gsap.fromTo(heroContent, { opacity: 0, y: 50, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power3.out' });
+        }
+
+        const projectsTitle = projectsRef.current?.querySelector('.section-title');
+        if (projectsTitle) {
+            gsap.fromTo(
+                projectsTitle,
+                { opacity: 0, x: -50, rotate: -5 },
+                {
+                    opacity: 1,
+                    x: 0,
+                    rotate: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: projectsRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+                },
+            );
+        }
+
+        gsap.utils.toArray<HTMLElement>('.project-card').forEach((card, index) => {
+            const projectImage = card.querySelector('.project-image');
+            if (projectImage) {
+                gsap.fromTo(
+                    projectImage,
+                    { y: -20 },
+                    { y: 20, ease: 'power1.out', scrollTrigger: { trigger: card, start: 'top 80%', end: 'bottom top', scrub: true } },
+                );
+            }
+            gsap.fromTo(
+                card,
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: index * 0.2,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: card, start: 'top 80%', toggleActions: 'play none none reverse' },
+                },
+            );
+        });
+
+        const skillsTitle = skillsRef.current?.querySelector('.section-title');
+        if (skillsTitle) {
+            gsap.fromTo(
+                skillsTitle,
+                { opacity: 0, x: 50, rotate: 5 },
+                {
+                    opacity: 1,
+                    x: 0,
+                    rotate: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: skillsRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+                },
+            );
+        }
+
+        gsap.utils.toArray<HTMLElement>('.skill-card').forEach((card, index) => {
+            gsap.fromTo(
+                card,
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: card, start: 'top 80%', toggleActions: 'play none none reverse' },
+                },
+            );
+            const skillBar = card.querySelector('.skill-bar');
+            if (skillBar) {
+                gsap.fromTo(
+                    skillBar,
+                    { width: '0%' },
+                    {
+                        width: skillBar.getAttribute('data-width') || '0%',
+                        duration: 1.5,
+                        ease: 'power2.out',
+                        scrollTrigger: { trigger: card, start: 'top 80%', toggleActions: 'play none none reverse' },
+                    },
+                );
+            }
+        });
+
+        const experienceTitle = experienceRef.current?.querySelector('.section-title');
+        if (experienceTitle) {
+            gsap.fromTo(
+                experienceTitle,
+                { opacity: 0, x: -50, rotate: -5 },
+                {
+                    opacity: 1,
+                    x: 0,
+                    rotate: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: experienceRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+                },
+            );
+        }
+
+        const aboutTitle = aboutRef.current?.querySelector('.about-title');
+        if (aboutTitle) {
+            gsap.fromTo(
+                aboutTitle,
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: aboutRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
+                },
+            );
+        }
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
     }, []);
 
     useEffect(() => {
@@ -184,7 +372,7 @@ const StaticPortfolio: React.FC = () => {
             {/* Hero Section */}
             <section ref={heroRef} className="pt-16 min-h-screen flex items-center justify-center relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-                    <div className="text-center">
+                    <div className="text-center hero-content">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -231,6 +419,21 @@ const StaticPortfolio: React.FC = () => {
                                 </button>
                             </div>
                         </motion.div>
+                        
+                        {/* Hero Image */}
+                        <div className="hero-image mt-12">
+                            <img
+                                src={user.photo}
+                                alt={user.name}
+                                className="mx-auto rounded-full w-64 h-64 object-cover border-8 border-purple-600/20"
+                                onLoad={() => console.log('✅ Hero image loaded:', user.photo)}
+                                onError={(e) => {
+                                    console.log('❌ Hero image failed:', user.photo);
+                                    console.log('🔄 Trying fallback...');
+                                    e.currentTarget.src = '/portifolio_Yacine/images/profile-placeholder.jpg';
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -239,7 +442,7 @@ const StaticPortfolio: React.FC = () => {
             <section ref={aboutRef} className="py-20 bg-gray-50 dark:bg-gray-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">À propos de moi</h2>
+                        <h2 className="about-title text-3xl md:text-4xl font-bold mb-4">À propos de moi</h2>
                         <p className="text-xl text-gray-600 dark:text-gray-300">Passionné par le code et l'innovation</p>
                     </div>
                     
@@ -249,7 +452,9 @@ const StaticPortfolio: React.FC = () => {
                                 src={user.photo}
                                 alt={user.name}
                                 className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+                                onLoad={() => console.log('✅ Profile image loaded:', user.photo)}
                                 onError={(e) => {
+                                    console.log('❌ Profile image failed:', user.photo);
                                     e.currentTarget.src = '/portifolio_Yacine/images/profile-placeholder.jpg';
                                 }}
                             />
@@ -289,7 +494,7 @@ const StaticPortfolio: React.FC = () => {
             <section ref={projectsRef} className="py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Mes Projets</h2>
+                        <h2 className="section-title text-3xl md:text-4xl font-bold mb-4">Mes Projets</h2>
                         <p className="text-xl text-gray-600 dark:text-gray-300">Découvrez mes réalisations récentes</p>
                     </div>
                     
@@ -300,14 +505,18 @@ const StaticPortfolio: React.FC = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5 }}
-                                className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                                className="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
                             >
-                                <div className="relative h-48">
+                                <div className="project-image relative h-48">
                                     <img
                                         src={project.image}
                                         alt={project.title}
                                         className="w-full h-full object-cover"
-                                        onError={() => handleImageError(project.id)}
+                                        onLoad={() => console.log('✅ Project image loaded:', project.title, project.image)}
+                                        onError={() => {
+                                            console.log('❌ Project image failed:', project.title, project.image);
+                                            handleImageError(project.id);
+                                        }}
                                     />
                                     {imageErrors.includes(project.id) && (
                                         <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
@@ -366,94 +575,196 @@ const StaticPortfolio: React.FC = () => {
             <section ref={skillsRef} className="py-20 bg-gray-50 dark:bg-gray-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Compétences</h2>
+                        <h2 className="section-title text-3xl md:text-4xl font-bold mb-4">Compétences</h2>
                         <p className="text-xl text-gray-600 dark:text-gray-300">Technologies que je maîtrise</p>
                     </div>
                     
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {skills.map((skill) => (
-                            <div
-                                key={skill.id}
-                                className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                            >
-                                <h3 className="text-lg font-semibold mb-2">{skill.name}</h3>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-sm text-gray-600 dark:text-gray-300">{skill.level}</span>
-                                    <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                        <div
-                                            className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full"
-                                            style={{
-                                                width: skill.level === 'Expert' ? '90%' : 
-                                                      skill.level === 'Avancé' ? '75%' : '60%'
-                                            }}
-                                        />
+                        {skills.map((skill) => {
+                            const getSkillPercentage = (level: string) => {
+                                switch (level.toLowerCase()) {
+                                    case 'expert': return '90%';
+                                    case 'avancé':
+                                    case 'advanced': return '75%';
+                                    case 'intermédiaire':
+                                    case 'intermediate': return '60%';
+                                    default: return '45%';
+                                }
+                            };
+                            
+                            return (
+                                <div
+                                    key={skill.id}
+                                    className="skill-card bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                                >
+                                    <h3 className="text-lg font-semibold mb-2">{skill.name}</h3>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-sm text-gray-600 dark:text-gray-300">{skill.level}</span>
+                                        <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                            <div
+                                                className="skill-bar bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full"
+                                                data-width={getSkillPercentage(skill.level)}
+                                                style={{ width: '0%' }}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </section>
 
             {/* Contact Section */}
-            <section ref={contactRef} className="py-20">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Contact</h2>
-                        <p className="text-xl text-gray-600 dark:text-gray-300">Parlons de votre projet</p>
-                    </div>
-                    
-                    <div className="max-w-2xl mx-auto">
-                        <form onSubmit={handleFormSubmit} className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                            <div className="mb-6">
-                                <label className="block text-sm font-medium mb-2">Nom</label>
-                                <input
-                                    type="text"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-600 dark:bg-gray-700"
-                                    required
-                                />
-                            </div>
-                            
-                            <div className="mb-6">
-                                <label className="block text-sm font-medium mb-2">Email</label>
-                                <input
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-600 dark:bg-gray-700"
-                                    required
-                                />
-                            </div>
-                            
-                            <div className="mb-6">
-                                <label className="block text-sm font-medium mb-2">Message</label>
-                                <textarea
-                                    value={formData.message}
-                                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                                    rows={5}
-                                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-600 dark:bg-gray-700"
-                                    required
-                                />
-                            </div>
-                            
-                            <button
-                                type="submit"
-                                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all"
+            <section ref={contactRef} style={{ padding: '3rem 0', position: 'relative', zIndex: 10 }}>
+                <div style={{ maxWidth: '48rem', margin: '0 auto', textAlign: 'center', padding: '0 1.5rem' }}>
+                    <RotatingText
+                        texts={['Contact', 'Me Contacter', 'Échangeons']}
+                        style={{ fontSize: '2.25rem', fontWeight: 'bold', color: isDarkMode ? '#a78bfa' : '#8b5cf6' }}
+                    />
+                </div>
+                <div
+                    style={{
+                        maxWidth: '32rem',
+                        margin: '0 auto',
+                        backgroundColor: isDarkMode ? '#2d3748' : '#ffffff',
+                        padding: '1.5rem',
+                        borderRadius: '0.5rem',
+                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                        position: 'relative',
+                        zIndex: 20,
+                        marginTop: '1.5rem',
+                        textAlign: 'center',
+                    }}
+                >
+                    <AnimatePresence>
+                        {toast && (
+                            <motion.div
+                                style={{
+                                    position: 'absolute',
+                                    top: '-3rem',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    padding: '0.75rem',
+                                    borderRadius: '0.25rem',
+                                    fontSize: '0.875rem',
+                                    fontWeight: '600',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.25rem',
+                                    backgroundColor: toast.type === 'success' ? '#8b5cf6' : '#e11d48',
+                                    color: '#ffffff',
+                                }}
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.3 }}
                             >
-                                Envoyer le message
-                            </button>
-                        </form>
-                    </div>
+                                {toast.type === 'success' ? <FaCheckCircle size={16} /> : <FaExclamationCircle size={16} />}
+                                {toast.message}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                    <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Nom"
+                                value={formData.name}
+                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                style={{
+                                    width: '100%',
+                                    padding: '0.5rem',
+                                    border: `1px solid ${isDarkMode ? '#4b5563' : '#d1d5db'}`,
+                                    borderRadius: '0.25rem',
+                                    backgroundColor: isDarkMode ? '#2d3748' : '#ffffff',
+                                    color: isDarkMode ? '#ffffff' : '#000000',
+                                    textAlign: 'center',
+                                }}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                value={formData.email}
+                                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                style={{
+                                    width: '100%',
+                                    padding: '0.5rem',
+                                    border: `1px solid ${isDarkMode ? '#4b5563' : '#d1d5db'}`,
+                                    borderRadius: '0.25rem',
+                                    backgroundColor: isDarkMode ? '#2d3748' : '#ffffff',
+                                    color: isDarkMode ? '#ffffff' : '#000000',
+                                    textAlign: 'center',
+                                }}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <textarea
+                                placeholder="Votre message"
+                                value={formData.message}
+                                onChange={(e) => setFormData({...formData, message: e.target.value})}
+                                style={{
+                                    width: '100%',
+                                    padding: '0.5rem',
+                                    border: `1px solid ${isDarkMode ? '#4b5563' : '#d1d5db'}`,
+                                    borderRadius: '0.25rem',
+                                    backgroundColor: isDarkMode ? '#2d3748' : '#ffffff',
+                                    color: isDarkMode ? '#ffffff' : '#000000',
+                                    textAlign: 'center',
+                                    height: '6rem',
+                                    resize: 'none',
+                                }}
+                                required
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            style={{
+                                width: '100%',
+                                backgroundColor: '#8b5cf6',
+                                color: '#ffffff',
+                                padding: '0.5rem 0.75rem',
+                                borderRadius: '0.25rem',
+                                border: 'none',
+                                cursor: 'pointer',
+                                transition: 'background-color 0.3s',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#7c3aed')}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#8b5cf6')}
+                        >
+                            Envoyer
+                        </button>
+                    </form>
+                </div>
+                <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+                    <a
+                        href="https://github.com/yacineatmani"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: isDarkMode ? '#a78bfa' : '#8b5cf6', transition: 'color 0.3s' }}
+                    >
+                        <FaGithub size={24} />
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/yacine-atmani"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: isDarkMode ? '#a78bfa' : '#8b5cf6', transition: 'color 0.3s' }}
+                    >
+                        <FaLinkedin size={24} />
+                    </a>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white py-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <p>&copy; 2024 {user.name}. Tous droits réservés.</p>
-                </div>
+            <footer style={{ padding: '1.5rem 0', textAlign: 'center', backgroundColor: isDarkMode ? '#1f2937' : '#f3f4f6' }}>
+                <p style={{ color: isDarkMode ? '#d1d5db' : '#6b7280', fontSize: '0.75rem' }}>
+                    © {new Date().getFullYear()} Yacine Atmani. Tous droits réservés.
+                </p>
             </footer>
 
             {/* Back to Top Button */}
