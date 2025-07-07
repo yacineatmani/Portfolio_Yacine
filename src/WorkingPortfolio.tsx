@@ -7,7 +7,7 @@ import { FaGithub, FaExternalLinkAlt, FaMoon, FaSun, FaArrowUp, FaCheckCircle, F
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Données fixes pour garantir le fonctionnement
+// Données réelles depuis la base MySQL
 const PORTFOLIO_DATA = {
     user: {
         id: 1,
@@ -15,13 +15,13 @@ const PORTFOLIO_DATA = {
         first_name: "Yacine",
         bio: "Développeur Fullstack passionné par Laravel, React et les technologies modernes.",
         photo: "/portifolio_Yacine/storage/profile/photo.jpg",
-        cv: "/portifolio_Yacine/cv.pdf"
+        cv: "/portifolio_Yacine/storage/cv/01JZ6EXQJTTW9ZNE9G5VC9ZFK5.pdf"
     },
     projects: [
         {
-            id: 1,
+            id: 2,
             title: "Next-Librairie",
-            description: "Application de gestion de bibliothèque moderne avec Next.js",
+            description: "Bibliothèque moderne de gestion de livres",
             github_link: "https://github.com/yacineatmani/Next-Libraire",
             demo_link: "https://github.com/yacineatmani/Next-Libraire",
             image: "/portifolio_Yacine/storage/projects/NF6Pvbb4wIWUgacXbdU9TBPP82CJ5dhPYhcOHaq6.png",
@@ -29,9 +29,9 @@ const PORTFOLIO_DATA = {
             challenges: "Gestion d'état complexe et interface utilisateur moderne"
         },
         {
-            id: 2,
+            id: 3,
             title: "Adam vs Yacine",
-            description: "Projet collaboratif de développement web avec CSS avancé",
+            description: "Chef-d'œuvre d'ingénierie du backend CSS. Insolent!!",
             github_link: "https://github.com/yacineatmani/gestion-librairie",
             demo_link: "https://github.com/yacineatmani/gestion-librairie",
             image: "/portifolio_Yacine/storage/projects/VlYo2Gh2p54gVMNXpYDddEIcbTPMD7YyFQbrvvJo.png",
@@ -39,9 +39,9 @@ const PORTFOLIO_DATA = {
             challenges: "Maîtrise avancée du CSS et animations"
         },
         {
-            id: 3,
-            title: "E-commerce Next.js",
-            description: "Plateforme e-commerce complète avec panier et paiement",
+            id: 4,
+            title: "Next E-commerce",
+            description: "Librairie en ligne complète avec panier et paiement",
             github_link: "https://github.com/yacineatmani/gestion-librairie",
             demo_link: "https://github.com/yacineatmani/gestion-librairie",
             image: "/portifolio_Yacine/storage/projects/hjdDFZY7AYyIdLvfVNcYb7P65FmP9joEiLNsyzPy.png",
@@ -49,41 +49,54 @@ const PORTFOLIO_DATA = {
             challenges: "Intégration paiement et gestion commandes"
         },
         {
-            id: 4,
+            id: 5,
             title: "All Nations in World",
             description: "Application géographique interactive des pays du monde",
             github_link: "https://github.com/yacineatmani/Project_Flag",
             demo_link: "https://yacineatmani.github.io/Project_Flag",
             image: "/portifolio_Yacine/storage/projects/01JZ6D9VRAN5YP2HRY3GPJ110H.png",
-            stack: ["JavaScript", "API REST", "CSS3", "HTML5"],
+            stack: ["React", "Tailwind", "React Router", "API REST"],
             challenges: "Intégration d'APIs et visualisation de données"
+        },
+        {
+            id: 6,
+            title: "Portfolio Laravel React",
+            description: "Un portfolio moderne construit avec Laravel et React, incluant un panneau d'administration Filament.",
+            github_link: "https://github.com/yacineatmani/portfolio",
+            demo_link: "https://portfolio.demo.com",
+            image: "https://via.placeholder.com/400x300/6366F1/FFFFFF?text=Portfolio+Laravel+React",
+            stack: ["Laravel", "React", "Filament", "Tailwind CSS", "MySQL"],
+            challenges: "Architecture full-stack et interface admin"
         }
     ],
     skills: [
-        { id: 1, name: "React", level: "Expert" },
-        { id: 2, name: "Laravel", level: "Avancé" },
+        { id: 1, name: "Laravel", level: "Expert" },
+        { id: 2, name: "React", level: "Avancé" },
         { id: 3, name: "JavaScript", level: "Expert" },
-        { id: 4, name: "PHP", level: "Avancé" },
+        { id: 4, name: "PHP", level: "Expert" },
         { id: 5, name: "Node.js", level: "Intermédiaire" },
-        { id: 6, name: "TypeScript", level: "Avancé" },
-        { id: 7, name: "Tailwind CSS", level: "Expert" },
-        { id: 8, name: "Docker", level: "Intermédiaire" },
-        { id: 9, name: "MySQL", level: "Avancé" }
+        { id: 6, name: "Next.js", level: "Confirmé" },
+        { id: 7, name: "TypeScript", level: "Avancé" },
+        { id: 8, name: "Tailwind CSS", level: "Avancé" },
+        { id: 9, name: "Docker", level: "Expert" },
+        { id: 10, name: "MySQL", level: "Avancé" },
+        { id: 11, name: "Vue.js", level: "Avancé" },
+        { id: 12, name: "Git", level: "Confirmé" }
     ],
     experiences: [
         {
             id: 1,
-            role: "Développeur Full Stack",
-            company: "MolenGeek",
-            period: "2024 - Présent",
-            description: "Formation intensive en développement web moderne avec focus sur React et Laravel",
-            tech: ["React", "Laravel", "JavaScript", "PHP"]
+            role: "Développeur Web",
+            company: "TechCorp", 
+            period: "2023 - Présent",
+            description: "Développement de sites modernes avec React.",
+            tech: ["React", "Node.js"]
         },
         {
             id: 2,
             role: "Développeur Frontend",
             company: "Projets Personnels",
-            period: "2023 - 2024",
+            period: "2023 - 2024", 
             description: "Développement d'applications web modernes et responsive",
             tech: ["HTML", "CSS", "JavaScript", "React"]
         }

@@ -33,7 +33,25 @@ public function index()
         
         $projects = $user->projects()->get();
         $skills = $user->skills()->get();
-        $experiences = $user->experiences()->get() ?? collect();
+        // Pas de modèle Experience pour le moment, utilisons des données fixes
+        $experiences = collect([
+            [
+                'id' => 1,
+                'role' => 'Développeur Full Stack',
+                'company' => 'MolenGeek',
+                'period' => '2024 - Présent',
+                'description' => 'Formation intensive en développement web moderne avec focus sur React et Laravel',
+                'technologies' => 'React,Laravel,JavaScript,PHP'
+            ],
+            [
+                'id' => 2,
+                'role' => 'Développeur Frontend',
+                'company' => 'Projets Personnels',
+                'period' => '2023 - 2024',
+                'description' => 'Développement d\'applications web modernes et responsive',
+                'technologies' => 'HTML,CSS,JavaScript,React'
+            ]
+        ]);
 
         return Inertia::render('Home', [
             'user' => [
@@ -59,12 +77,12 @@ public function index()
             'skills' => $skills,
             'experiences' => $experiences->map(function ($experience) {
                 return [
-                    'id' => $experience->id,
-                    'role' => $experience->role,
-                    'company' => $experience->company,
-                    'period' => $experience->period,
-                    'description' => $experience->description,
-                    'tech' => $experience->technologies ? explode(',', $experience->technologies) : [],
+                    'id' => $experience['id'],
+                    'role' => $experience['role'],
+                    'company' => $experience['company'],
+                    'period' => $experience['period'],
+                    'description' => $experience['description'],
+                    'tech' => $experience['technologies'] ? explode(',', $experience['technologies']) : [],
                 ];
             }),
         ]);
