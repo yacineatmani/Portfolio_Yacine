@@ -36,11 +36,13 @@ jobs:
 
     - name: Copy assets for GitHub Pages
       run: |
+        mkdir -p dist/storage
         cp -r public/images dist/images || true
         cp public/cv.pdf dist/cv.pdf || true
         cp public/favicon.* dist/ || true
         cp public/apple-touch-icon.png dist/ || true
-        cp -r public/storage dist/storage || true
+        cp -r public/storage/* dist/storage/ || true
+        ls -la dist/storage/ || true
         echo "" > dist/.nojekyll
 
     - name: Setup Pages
