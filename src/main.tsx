@@ -9,3 +9,4 @@ root.render(
     <WorkingPortfolio />
   </React.StrictMode>
 );
+// Force GitHub Pages redeploy lun.  7 juil. 2025 15:11:16
