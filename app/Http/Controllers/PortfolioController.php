@@ -16,7 +16,7 @@ public function index()
         
         // Si aucun utilisateur n'existe, utiliser des données par défaut
         if (!$user) {
-            $defaultData = [
+            return Inertia::render('Home', [
                 'user' => [
                     'id' => 1,
                     'name' => 'Yacine Atmani',
@@ -28,16 +28,14 @@ public function index()
                 'projects' => [],
                 'skills' => [],
                 'experiences' => []
-            ];
-            
-            \Log::info('Aucun utilisateur trouvé, utilisation des données par défaut', $defaultData);
-            return Inertia::render('Home', $defaultData);
+            ]);
         }
         
         $projects = $user->projects()->get();
         $skills = $user->skills()->get();
+        $experiences = $user->experiences()->get() ?? collect();
 
-        $userData = [
+        return Inertia::render('Home', [
             'user' => [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -55,15 +53,21 @@ public function index()
                     'demo_link' => $project->demo_link,
                     'image' => $project->image,
                     'stack' => $project->technologies ? explode(',', $project->technologies) : [],
-                    'challenges' => $project->description,
+                    'challenges' => $project->description, // On utilise la description comme fallback
                 ];
             }),
             'skills' => $skills,
-            'experiences' => []
-        ];
-
-        \Log::info('Données utilisateur envoyées', $userData);
-        return Inertia::render('Home', $userData);
+            'experiences' => $experiences->map(function ($experience) {
+                return [
+                    'id' => $experience->id,
+                    'role' => $experience->role,
+                    'company' => $experience->company,
+                    'period' => $experience->period,
+                    'description' => $experience->description,
+                    'tech' => $experience->technologies ? explode(',', $experience->technologies) : [],
+                ];
+            }),
+        ]);
     }
     public function downloadCv()
     {

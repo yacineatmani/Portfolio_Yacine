@@ -4,22 +4,73 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { debounce } from 'lodash';
 import { FaGithub, FaExternalLinkAlt, FaMoon, FaSun, FaArrowUp, FaCheckCircle, FaExclamationCircle, FaLinkedin, FaDownload } from 'react-icons/fa';
-import dataImport from './data.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Adapter les chemins d'images pour GitHub Pages
+// Données statiques pour GitHub Pages
 const staticData = {
-    ...dataImport,
-    user: {
-        ...dataImport.user,
-        photo: dataImport.user.photo ? `/portifolio_Yacine/storage/${dataImport.user.photo}` : '/portifolio_Yacine/images/profile-placeholder.jpg',
-        cv: dataImport.user.cv ? `/portifolio_Yacine/storage/${dataImport.user.cv}` : '/portifolio_Yacine/cv.pdf'
+  user: {
+    id: 1,
+    name: "Yacine Atmani",
+    first_name: "Yacine",
+    bio: "Développeur Full Stack passionné par la création d'applications web modernes et performantes. Spécialisé en React, Laravel et technologies modernes.",
+    photo: "/images/profile/photo.jpg",
+    cv: "/cv.pdf"
+  },
+  projects: [
+    {
+      id: 1,
+      title: "Portfolio Laravel + React",
+      description: "Portfolio moderne développé avec Laravel 11, React 18, TypeScript et Tailwind CSS. Intègre un panel d'administration Filament.",
+      github_link: "https://github.com/yacineatmani/portfolio",
+      demo_link: "https://yacineatmani.github.io/Portfolio",
+      image: "/images/projects/portfolio.jpg",
+      stack: ["React", "Laravel", "TypeScript", "Tailwind CSS", "Filament"],
+      challenges: "Optimisation des performances, responsive design et déploiement GitHub Pages",
+      video: null
     },
-    projects: dataImport.projects.map(project => ({
-        ...project,
-        image: project.image ? `/portifolio_Yacine/storage/${project.image}` : '/portifolio_Yacine/images/project-placeholder.jpg'
-    }))
+    {
+      id: 2,
+      title: "Application Gestion",
+      description: "Application web complète de gestion avec panel d'administration et authentification",
+      github_link: "https://github.com/yacineatmani/gestion-app",
+      demo_link: null,
+      image: "/images/projects/laravel-app.jpg",
+      stack: ["Laravel", "PHP", "MySQL", "Filament", "Livewire"],
+      challenges: "Gestion des fichiers, sécurisation des données et interface utilisateur intuitive",
+      video: null
+    }
+  ],
+  skills: [
+    { id: 1, name: "React", level: "Expert" },
+    { id: 2, name: "Laravel", level: "Expert" },
+    { id: 3, name: "TypeScript", level: "Avancé" },
+    { id: 4, name: "PHP", level: "Expert" },
+    { id: 5, name: "JavaScript", level: "Expert" },
+    { id: 6, name: "Tailwind CSS", level: "Avancé" },
+    { id: 7, name: "MySQL", level: "Avancé" },
+    { id: 8, name: "Git", level: "Avancé" },
+    { id: 9, name: "Docker", level: "Intermédiaire" },
+    { id: 10, name: "Node.js", level: "Avancé" }
+  ],
+  experiences: [
+    {
+      id: 1,
+      role: "Développeur Full Stack",
+      company: "MolenGeek",
+      period: "2024 - Présent",
+      description: "Formation intensive en développement web moderne avec React, Laravel et technologies actuelles",
+      tech: ["React", "Laravel", "TypeScript", "PHP", "MySQL"]
+    },
+    {
+      id: 2,
+      role: "Développeur Frontend",
+      company: "Projets Personnels",
+      period: "2023 - 2024",
+      description: "Développement d'applications web avec focus sur l'expérience utilisateur",
+      tech: ["React", "JavaScript", "CSS", "HTML"]
+    }
+  ]
 };
 
 interface User {

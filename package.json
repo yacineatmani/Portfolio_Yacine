@@ -8,7 +8,6 @@
         "build": "vite build",
         "build:ssr": "vite build && vite build --ssr",
         "build:static": "vite build --mode static",
-        "export-data": "php export-data.php",
         "dev": "vite",
         "predeploy": "npm run build:static",
         "deploy": "gh-pages -d dist",
