@@ -14,7 +14,7 @@ const PORTFOLIO_DATA = {
         name: "Yacine Atmani",
         first_name: "Yacine",
         bio: "Développeur Fullstack passionné par Laravel, React et les technologies modernes.",
-        photo: "https://via.placeholder.com/300x300/8B5CF6/FFFFFF?text=YA",
+        photo: "/portifolio_Yacine/storage/profile/photo.jpg",
         cv: "/portifolio_Yacine/cv.pdf"
     },
     projects: [
@@ -24,7 +24,7 @@ const PORTFOLIO_DATA = {
             description: "Application de gestion de bibliothèque moderne avec Next.js",
             github_link: "https://github.com/yacineatmani/Next-Libraire",
             demo_link: "https://github.com/yacineatmani/Next-Libraire",
-            image: "https://via.placeholder.com/400x300/3B82F6/FFFFFF?text=Next+Library",
+            image: "/portifolio_Yacine/storage/projects/NF6Pvbb4wIWUgacXbdU9TBPP82CJ5dhPYhcOHaq6.png",
             stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
             challenges: "Gestion d'état complexe et interface utilisateur moderne"
         },
@@ -34,7 +34,7 @@ const PORTFOLIO_DATA = {
             description: "Projet collaboratif de développement web avec CSS avancé",
             github_link: "https://github.com/yacineatmani/gestion-librairie",
             demo_link: "https://github.com/yacineatmani/gestion-librairie",
-            image: "https://via.placeholder.com/400x300/10B981/FFFFFF?text=CSS+Project",
+            image: "/portifolio_Yacine/storage/projects/VlYo2Gh2p54gVMNXpYDddEIcbTPMD7YyFQbrvvJo.png",
             stack: ["HTML", "CSS", "JavaScript", "PHP"],
             challenges: "Maîtrise avancée du CSS et animations"
         },
@@ -44,7 +44,7 @@ const PORTFOLIO_DATA = {
             description: "Plateforme e-commerce complète avec panier et paiement",
             github_link: "https://github.com/yacineatmani/gestion-librairie",
             demo_link: "https://github.com/yacineatmani/gestion-librairie",
-            image: "https://via.placeholder.com/400x300/F59E0B/FFFFFF?text=E-Commerce",
+            image: "/portifolio_Yacine/storage/projects/hjdDFZY7AYyIdLvfVNcYb7P65FmP9joEiLNsyzPy.png",
             stack: ["Next.js", "Stripe", "MongoDB", "React"],
             challenges: "Intégration paiement et gestion commandes"
         },
@@ -54,7 +54,7 @@ const PORTFOLIO_DATA = {
             description: "Application géographique interactive des pays du monde",
             github_link: "https://github.com/yacineatmani/Project_Flag",
             demo_link: "https://yacineatmani.github.io/Project_Flag",
-            image: "https://via.placeholder.com/400x300/EF4444/FFFFFF?text=World+App",
+            image: "/portifolio_Yacine/storage/projects/01JZ6D9VRAN5YP2HRY3GPJ110H.png",
             stack: ["JavaScript", "API REST", "CSS3", "HTML5"],
             challenges: "Intégration d'APIs et visualisation de données"
         }
@@ -257,6 +257,9 @@ const WorkingPortfolio: React.FC = () => {
                                     src={user.photo}
                                     alt={user.name}
                                     className="mx-auto rounded-full w-32 h-32 md:w-48 md:h-48 object-cover border-4 border-purple-600/20 shadow-xl"
+                                    onError={(e) => {
+                                        e.currentTarget.src = "https://via.placeholder.com/300x300/8B5CF6/FFFFFF?text=YA";
+                                    }}
                                 />
                             </div>
                             
@@ -319,6 +322,9 @@ const WorkingPortfolio: React.FC = () => {
                                 src={user.photo}
                                 alt={user.name}
                                 className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+                                onError={(e) => {
+                                    e.currentTarget.src = "https://via.placeholder.com/400x400/8B5CF6/FFFFFF?text=Yacine+Atmani";
+                                }}
                             />
                         </div>
                         
@@ -372,6 +378,9 @@ const WorkingPortfolio: React.FC = () => {
                                         src={project.image}
                                         alt={project.title}
                                         className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            e.currentTarget.src = `https://via.placeholder.com/400x300/6366F1/FFFFFF?text=${encodeURIComponent(project.title)}`;
+                                        }}
                                     />
                                 </div>
                                 
