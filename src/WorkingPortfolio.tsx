@@ -14,8 +14,8 @@ const PORTFOLIO_DATA = {
         name: "Yacine Atmani",
         first_name: "Yacine",
         bio: "Développeur Fullstack passionné par Laravel, React et les technologies modernes.",
-        photo: "/portifolio_Yacine/storage/profile/photo.jpg",
-        cv: "/portifolio_Yacine/storage/cv/01JZ6EXQJTTW9ZNE9G5VC9ZFK5.pdf"
+        photo: "/Portfolio_Yacine/storage/profile/photo.jpg",
+        cv: "/Portfolio_Yacine/storage/cv/01JZ6EXQJTTW9ZNE9G5VC9ZFK5.pdf"
     },
     projects: [
         {
@@ -24,7 +24,7 @@ const PORTFOLIO_DATA = {
             description: "Bibliothèque moderne de gestion de livres",
             github_link: "https://github.com/yacineatmani/Next-Libraire",
             demo_link: "https://github.com/yacineatmani/Next-Libraire",
-            image: "/portifolio_Yacine/storage/projects/NF6Pvbb4wIWUgacXbdU9TBPP82CJ5dhPYhcOHaq6.png",
+            image: "/Portfolio_Yacine/storage/projects/NF6Pvbb4wIWUgacXbdU9TBPP82CJ5dhPYhcOHaq6.png",
             stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
             challenges: "Gestion d'état complexe et interface utilisateur moderne"
         },
@@ -34,7 +34,7 @@ const PORTFOLIO_DATA = {
             description: "Chef-d'œuvre d'ingénierie du backend CSS. Insolent!!",
             github_link: "https://github.com/yacineatmani/gestion-librairie",
             demo_link: "https://github.com/yacineatmani/gestion-librairie",
-            image: "/portifolio_Yacine/storage/projects/VlYo2Gh2p54gVMNXpYDddEIcbTPMD7YyFQbrvvJo.png",
+            image: "/Portfolio_Yacine/storage/projects/VlYo2Gh2p54gVMNXpYDddEIcbTPMD7YyFQbrvvJo.png",
             stack: ["HTML", "CSS", "JavaScript", "PHP"],
             challenges: "Maîtrise avancée du CSS et animations"
         },
@@ -44,7 +44,7 @@ const PORTFOLIO_DATA = {
             description: "Librairie en ligne complète avec panier et paiement",
             github_link: "https://github.com/yacineatmani/gestion-librairie",
             demo_link: "https://github.com/yacineatmani/gestion-librairie",
-            image: "/portifolio_Yacine/storage/projects/hjdDFZY7AYyIdLvfVNcYb7P65FmP9joEiLNsyzPy.png",
+            image: "/Portfolio_Yacine/storage/projects/hjdDFZY7AYyIdLvfVNcYb7P65FmP9joEiLNsyzPy.png",
             stack: ["Next.js", "Stripe", "MongoDB", "React"],
             challenges: "Intégration paiement et gestion commandes"
         },
@@ -54,7 +54,7 @@ const PORTFOLIO_DATA = {
             description: "Application géographique interactive des pays du monde",
             github_link: "https://github.com/yacineatmani/Project_Flag",
             demo_link: "https://yacineatmani.github.io/Project_Flag",
-            image: "/portifolio_Yacine/storage/projects/01JZ6D9VRAN5YP2HRY3GPJ110H.png",
+            image: "/Portfolio_Yacine/storage/projects/01JZ6D9VRAN5YP2HRY3GPJ110H.png",
             stack: ["React", "Tailwind", "React Router", "API REST"],
             challenges: "Intégration d'APIs et visualisation de données"
         },

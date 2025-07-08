@@ -4,7 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   mode: 'static',
-  base: '/Portfolio_Yacine/', // Nom exact du repository GitHub
+  base: '/', // Racine pour Netlify
   plugins: [react()],
   build: {
     outDir: 'dist',
