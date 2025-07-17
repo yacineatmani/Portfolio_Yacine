@@ -1,0 +1,7 @@
+# Redirections pour Netlify SPA
+/*    /index.html   200
+
+# Sécurité
+/admin/*  401
+/.env     401
+/config/* 401

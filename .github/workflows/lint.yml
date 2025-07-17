@@ -1,16 +1,14 @@
 name: linter
 
 on:
-  # Temporairement désactivé pour permettre le déploiement
-  # push:
-  #   branches:
-  #     - develop
-  #     - main
-  # pull_request:
-  #   branches:
-  #     - develop
-  #     - main
-  workflow_dispatch: # Manuel uniquement
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
 
 permissions:
   contents: write

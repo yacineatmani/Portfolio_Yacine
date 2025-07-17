@@ -1,0 +1,6 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="150" cy="150" r="150" fill="#8b5cf6"/>
+    <circle cx="150" cy="120" r="40" fill="#ffffff"/>
+    <path d="M150 180 C120 180, 100 200, 100 220 L200 220 C200 200, 180 180, 150 180 Z" fill="#ffffff"/>
+    <text x="150" y="280" font-family="Arial" font-size="16" fill="#ffffff" text-anchor="middle">Yacine Atmani</text>
+</svg>
