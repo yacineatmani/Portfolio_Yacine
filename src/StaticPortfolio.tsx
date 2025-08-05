@@ -491,6 +491,7 @@ const StaticPortfolio: React.FC = () => {
             </section>
 
             {/* Projects Section */}
+            {/* Applications en ligne */}
             <section ref={projectsRef} className="py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
@@ -518,6 +519,17 @@ const StaticPortfolio: React.FC = () => {
                                             handleImageError(project.id);
                                         }}
                                     />
+                                    {project.demo_link && (
+                                        <a
+                                            href={project.demo_link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="absolute top-2 right-2 bg-white/80 dark:bg-gray-900/80 p-2 rounded-full shadow hover:bg-purple-600 hover:text-white transition-colors z-10"
+                                            title="Voir l'application en ligne"
+                                        >
+                                            <FaExternalLinkAlt />
+                                        </a>
+                                    )}
                                     {imageErrors.includes(project.id) && (
                                         <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                                             <span className="text-gray-500">Image non disponible</span>
@@ -527,6 +539,20 @@ const StaticPortfolio: React.FC = () => {
                                 
                                 <div className="p-6">
                                     <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-xl font-bold">{project.title}</span>
+                                        {project.demo_link && (
+                                            <a
+                                                href={project.demo_link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-purple-600 hover:text-purple-800"
+                                                title="Voir l'application en ligne"
+                                            >
+                                                <FaExternalLinkAlt />
+                                            </a>
+                                        )}
+                                    </div>
                                     <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
                                     
                                     <div className="flex flex-wrap gap-2 mb-4">
